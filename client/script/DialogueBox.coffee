@@ -2,6 +2,7 @@ class Game.DialogueBox
   text: null
   #index of dialogue
   visiblePosition: 0
+  index: 0
 
   constructor: (stage) ->
     @text = new PIXI.Text("Text", {font: "bold italic 14px Arvo", fill: "#eeffee", align: "left", stroke: "#ddeeff", strokeThickness: 1})
@@ -9,8 +10,15 @@ class Game.DialogueBox
     @text.position.y = 5
     @text.anchor.x = @text.anchor.y = 0
     stage.addChild(@text)
+    window.addEventListener('keydown', ( (event) => @keydown(event) ), false)
+
+  keydown: (event) ->
+    @displayAll() if event.keyCode == 32
+
+  displayAll: ->
+    @visiblePosition = Game.dialogue[@index].length
 
   update: (dt) ->
-    dialogue = Game.dialogue[0]
-    @text.setText(dialogue[0..@visiblePosition])
+    @text.setText(Game.dialogue[@index][0..@visiblePosition])
     @visiblePosition += 20 * dt
+
