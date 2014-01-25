@@ -1,5 +1,7 @@
 class Game.DialogueBox
   text: null
+  #index of dialogue
+  visiblePosition: 0
 
   constructor: (stage) ->
     @text = new PIXI.Text("Text", {font: "bold italic 14px Arvo", fill: "#eeffee", align: "left", stroke: "#ddeeff", strokeThickness: 1})
@@ -9,4 +11,6 @@ class Game.DialogueBox
     stage.addChild(@text)
 
   update: (dt) ->
-    @text.setText(Game.dialogue[0])
+    dialogue = Game.dialogue[0]
+    @text.setText(dialogue[0..@visiblePosition])
+    @visiblePosition += 20 * dt
