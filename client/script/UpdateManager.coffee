@@ -1,6 +1,7 @@
 class Game.UpdateManager
   dialog: null
   player: null
+  city: null
   items: []
   time: null
 
@@ -16,6 +17,7 @@ class Game.UpdateManager
     if @dialog.active
       @dialog.update(dt)
     else
+      @city.update(dt)
       @player.update(dt)
       for object in @items
         object.update(dt)

@@ -9,8 +9,6 @@ document.body.appendChild(renderer.view)
 
 input = new Game.InputManager
 
-dialogueBox = new Game.DialogueBox(stage)
-
 updater = new Game.UpdateManager
 
 player = null
@@ -18,8 +16,9 @@ assetsLoaded = false
 
 onAssetsLoaded = () ->
 
-  updater.dialog = dialogueBox
+  updater.city = new Game.City(stage)
   updater.player = new Game.Player(200,150, stage)
+  updater.dialog = new Game.DialogueBox(stage)
 
   updater.items.push new Game.Item(400,400, stage)
   updater.items.push new Game.Item(400,450, stage)
