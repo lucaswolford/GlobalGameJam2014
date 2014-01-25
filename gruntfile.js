@@ -70,8 +70,7 @@ module.exports = function(grunt) {
         },
         'gh-pages': {
             options: {
-                base: 'dist',
-                repo: 'https://github.com/Code6226/GameJamPractice.git'
+                base: 'dist'
             },
             src: '**'
         }
