@@ -1,9 +1,16 @@
 class Game.UpdateManager
+  containerWorld: null
+  containerUI: null
   dialog: null
   player: null
+  city: null
   items: []
   npcs: []
   time: null
+
+  constructor: (containerWorld, containerUI)->
+    @containerWorld = containerWorld
+    @containerUI = containerUI
 
   dt: ->
     now = Date.now()
@@ -17,6 +24,7 @@ class Game.UpdateManager
     if @dialog.active
       @dialog.update(dt)
     else
+      @city.update(dt)
       @player.update(dt)
       for item in @items
         item.update(dt)
@@ -27,6 +35,10 @@ class Game.UpdateManager
         npc.update(dt)
         if @ifPlayerCollision(npc) && (Game.Key.isDown(Game.Key.ENTER))
           npc.playerActivated(@dialog)
+
+    # Scrolling
+    @containerWorld.position.x = Game.SCREEN_SIZE.Xhalf - (@player.sprite.position.x)
+    @containerWorld.position.y = Game.SCREEN_SIZE.Yhalf - (@player.sprite.position.y)
 
   ifPlayerCollision: (object) ->
     distX = @player.sprite.position.x - object.sprite.position.x

@@ -1,5 +1,5 @@
 class Game.Item
-  size: 10
+  size: 32
 
   constructor: (x,y, stage) ->
     @sprite = new PIXI.Sprite(Game.getTextureFromFrame("item"))
