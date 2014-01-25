@@ -3,6 +3,7 @@ class Game.DialogueBox
   #index of dialogue
   visiblePosition: 0
   index: 0
+  textSpeed: 10
 
   constructor: (stage) ->
     @text = new PIXI.Text("Text", {font: "bold italic 14px Arvo", fill: "#eeffee", align: "left", stroke: "#ddeeff", strokeThickness: 1})
@@ -21,7 +22,7 @@ class Game.DialogueBox
         @nextLine()
 
   displayAll: ->
-    @visiblePosition = Game.dialogue[@index].length
+    @visiblePosition = @getGameDialogue().length
 
   nextLine: ->
     if @index < Game.dialogue.length - 1
@@ -29,9 +30,12 @@ class Game.DialogueBox
       @visiblePosition = 0
 
   isAtEndOfLine: ->
-    @visiblePosition >= Game.dialogue[@index].length
+    @visiblePosition >= @getGameDialogue().length
 
   update: (dt) ->
-    @text.setText(Game.dialogue[@index][0..@visiblePosition])
-    @visiblePosition += 10 * dt
+    @text.setText(@getGameDialogue()[0..@visiblePosition])
+    @visiblePosition += @textSpeed * dt
+
+  getGameDialogue: ->
+    Game.dialogue[@index]
 
