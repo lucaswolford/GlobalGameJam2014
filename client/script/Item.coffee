@@ -2,7 +2,7 @@ class Game.Item
   size: 10
 
   constructor: (x,y, stage) ->
-    @sprite = new PIXI.Sprite(Game.getTextureFromFrame("bunny"))
+    @sprite = new PIXI.Sprite(Game.getTextureFromFrame("item"))
     @sprite.anchor.x = 0.5
     @sprite.anchor.y = 0.5
     @sprite.position.x = x
@@ -12,6 +12,6 @@ class Game.Item
   update: ->
     null
 
-  playerCollision: ->
+  playerActivated: ->
     @sprite.position.x = -1000
     #add to player inventory

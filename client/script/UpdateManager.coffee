@@ -2,6 +2,7 @@ class Game.UpdateManager
   dialog: null
   player: null
   items: []
+  npcs: []
   time: null
 
   dt: ->
@@ -17,9 +18,15 @@ class Game.UpdateManager
       @dialog.update(dt)
     else
       @player.update(dt)
-      for object in @items
-        object.update(dt)
-        object.playerCollision() if @ifPlayerCollision(object)
+      for item in @items
+        item.update(dt)
+        if @ifPlayerCollision(item) && (Game.Key.isDown(Game.Key.ENTER))
+          item.playerActivated()
+
+      for npc in @npcs
+        npc.update(dt)
+        if @ifPlayerCollision(npc) && (Game.Key.isDown(Game.Key.ENTER))
+          npc.playerActivated(@dialog)
 
   ifPlayerCollision: (object) ->
     distX = @player.sprite.position.x - object.sprite.position.x

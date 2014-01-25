@@ -17,12 +17,14 @@ player = null
 assetsLoaded = false
 
 onAssetsLoaded = () ->
-
   updater.dialog = dialogueBox
   updater.player = new Game.Player(200,150, stage)
 
   updater.items.push new Game.Item(400,400, stage)
   updater.items.push new Game.Item(400,450, stage)
+
+  updater.npcs.push new Game.Npc(400,200, stage, 'hobo', 'sad')
+  updater.npcs.push new Game.Npc(400,250, stage, 'victim', 'angry')
 
   assetsLoaded = true
 

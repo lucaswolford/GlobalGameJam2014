@@ -2,6 +2,7 @@ Game.Key =
   _pressed: {}
 
   SPACE: 32
+  ENTER: 13
   LEFT: 37
   UP: 38
   RIGHT: 39

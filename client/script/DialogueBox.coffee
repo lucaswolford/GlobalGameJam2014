@@ -1,6 +1,5 @@
 class Game.DialogueBox
   text: null
-  #index of dialogue
   visiblePosition: 0
   index: 0
   textSpeed: 10
@@ -13,6 +12,11 @@ class Game.DialogueBox
     @text.anchor.x = @text.anchor.y = 0
     stage.addChild(@text)
     window.addEventListener('keydown', ( (event) => @keydown(event) ), false)
+    @playScript('detective', 'script')
+
+  update: (dt) ->
+    @text.setText(@getGameDialogue()[0..@visiblePosition])
+    @visiblePosition += @textSpeed * dt
 
   keydown: (event) ->
     if event.keyCode == 32
@@ -25,7 +29,7 @@ class Game.DialogueBox
     @visiblePosition = @getGameDialogue().length
 
   nextLine: ->
-    if @index < Game.dialogue.length - 1
+    if @index < Game.dialogue[@npc][@mood].length - 1
       @index++
       @visiblePosition = 0
     else
@@ -34,13 +38,15 @@ class Game.DialogueBox
   isAtEndOfLine: ->
     @visiblePosition >= @getGameDialogue().length
 
-  update: (dt) ->
-    @text.setText(@getGameDialogue()[0..@visiblePosition])
-    @visiblePosition += @textSpeed * dt
-
   getGameDialogue: ->
-    Game.dialogue[@index]
+    Game.dialogue[@npc][@mood][@index]
 
   hide: ->
     @text.setText('')
     @active = false
+
+  playScript: (npc, mood) ->
+    @active = true
+    @npc = npc
+    @mood = mood
+    @index = 0
