@@ -1,10 +1,8 @@
 stage = new PIXI.Stage(0x000000)
-containerUI = new PIXI.DisplayObjectContainer();
-containerWorld = new PIXI.DisplayObjectContainer();
-#containerWorld.position.x = containerWorld.position.y = 0;
-#containerWorld.scale.x = containerWorld.scale.y = 1;
-stage.addChild(containerWorld);
-stage.addChild(containerUI);
+containerUI = new PIXI.DisplayObjectContainer()
+containerWorld = new PIXI.DisplayObjectContainer()
+stage.addChild(containerWorld)
+stage.addChild(containerUI)
 
 Game.SCREEN_SIZE =
   X: 800
@@ -37,8 +35,8 @@ onAssetsLoaded = () ->
   assetsLoaded = true
 
 loader = new PIXI.AssetLoader(['assets/main0.json'])
-loader.onComplete = onAssetsLoaded; # use callback
-loader.load(); #begin load
+loader.onComplete = onAssetsLoaded # use callback
+loader.load() #begin load
 
 animate = () ->
   requestAnimFrame( animate )
