@@ -7,7 +7,8 @@ SCREEN_SIZE =
 renderer = PIXI.autoDetectRenderer(SCREEN_SIZE.X, SCREEN_SIZE.Y, null)
 document.body.appendChild(renderer.view)
 
-input = new Game.InputManager(window)
+input = new Game.InputManager
+
 dialogueBox = new Game.DialogueBox(stage)
 
 player = null
@@ -27,8 +28,8 @@ animate = () ->
   dt *= 0.001 #delta time in sec
   time = now
 
-  dialogueBox.update(dt)
   player.update(dt) if player?
+  dialogueBox.update(dt)
 
   renderer.render(stage)
 

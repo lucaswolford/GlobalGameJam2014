@@ -17,6 +17,6 @@ Game.Key =
     delete @_pressed[event.keyCode]
 
 class Game.InputManager
-  init: (window) ->
+  constructor: ->
     window.addEventListener('keyup', ((event) -> Game.Key.onKeyup(event) ), false)
     window.addEventListener('keydown', ((event) -> Game.Key.onKeydown(event) ), false)
