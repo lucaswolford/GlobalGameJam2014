@@ -1,5 +1,6 @@
 class Game.Player
   speed: 200
+  size: 10
   constructor: (x,y, stage) ->
     @sprite = new PIXI.Sprite(Game.getTextureFromFrame("bunny"))
     @sprite.anchor.x = 0.5

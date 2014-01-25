@@ -11,25 +11,29 @@ input = new Game.InputManager
 
 dialogueBox = new Game.DialogueBox(stage)
 
+updater = new Game.UpdateManager
+
 player = null
+assetsLoaded = false
+
 onAssetsLoaded = () ->
-  player = new Game.Player(200,150, stage)
+
+  updater.dialog = dialogueBox
+  updater.player = new Game.Player(200,150, stage)
+
+  updater.items.push new Game.Item(400,400, stage)
+  updater.items.push new Game.Item(400,450, stage)
+
+  assetsLoaded = true
 
 loader = new PIXI.AssetLoader(['assets/main0.json'])
 loader.onComplete = onAssetsLoaded; # use callback
 loader.load(); #begin load
 
-time = null
 animate = () ->
   requestAnimFrame( animate )
 
-  now = Date.now()
-  dt = (now - (time || now)) #delta time in ms
-  dt *= 0.001 #delta time in sec
-  time = now
-
-  player.update(dt) if player?
-  dialogueBox.update(dt)
+  updater.updateAll() if assetsLoaded == true
 
   renderer.render(stage)
 

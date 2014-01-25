@@ -4,6 +4,7 @@ class Game.DialogueBox
   visiblePosition: 0
   index: 0
   textSpeed: 10
+  active: true
 
   constructor: (stage) ->
     @text = new PIXI.Text("Text", {font: "bold italic 14px Arvo", fill: "#eeffee", align: "left", stroke: "#ddeeff", strokeThickness: 1})
@@ -15,7 +16,6 @@ class Game.DialogueBox
 
   keydown: (event) ->
     if event.keyCode == 32
-
       if not @isAtEndOfLine()
         @displayAll()
       else
@@ -28,6 +28,8 @@ class Game.DialogueBox
     if @index < Game.dialogue.length - 1
       @index++
       @visiblePosition = 0
+    else
+      @hide()
 
   isAtEndOfLine: ->
     @visiblePosition >= @getGameDialogue().length
@@ -39,3 +41,6 @@ class Game.DialogueBox
   getGameDialogue: ->
     Game.dialogue[@index]
 
+  hide: ->
+    @text.setText('')
+    @active = false
