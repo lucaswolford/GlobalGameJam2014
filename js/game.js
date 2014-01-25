@@ -31,6 +31,26 @@
 }).call(this);
 
 (function() {
+  Game.City = (function() {
+    function City(stage) {
+      this.sprite = new PIXI.Sprite(Game.getTextureFromFrame("worldbg"));
+      this.sprite.anchor.x = 0;
+      this.sprite.anchor.y = 0;
+      this.sprite.position.x = this.sprite.position.y = 0;
+      stage.addChild(this.sprite);
+    }
+
+    City.prototype.update = function() {
+      return null;
+    };
+
+    return City;
+
+  })();
+
+}).call(this);
+
+(function() {
   Game.DialogueBox = (function() {
     DialogueBox.prototype.text = null;
 
@@ -39,6 +59,8 @@
     DialogueBox.prototype.index = 0;
 
     DialogueBox.prototype.textSpeed = 10;
+
+    DialogueBox.prototype.active = true;
 
     function DialogueBox(stage) {
       var _this = this;
@@ -76,6 +98,8 @@
       if (this.index < Game.dialogue.length - 1) {
         this.index++;
         return this.visiblePosition = 0;
+      } else {
+        return this.hide();
       }
     };
 
@@ -92,7 +116,104 @@
       return Game.dialogue[this.index];
     };
 
+    DialogueBox.prototype.hide = function() {
+      this.text.setText('');
+      return this.active = false;
+    };
+
     return DialogueBox;
+
+  })();
+
+}).call(this);
+
+(function() {
+  Game.Item = (function() {
+    Item.prototype.size = 32;
+
+    function Item(x, y, stage) {
+      this.sprite = new PIXI.Sprite(Game.getTextureFromFrame("item"));
+      this.sprite.anchor.x = 0.5;
+      this.sprite.anchor.y = 0.5;
+      this.sprite.position.x = x;
+      this.sprite.position.y = y;
+      stage.addChild(this.sprite);
+    }
+
+    Item.prototype.update = function() {
+      return null;
+    };
+
+    Item.prototype.playerCollision = function() {
+      return this.sprite.position.x = -1000;
+    };
+
+    return Item;
+
+  })();
+
+}).call(this);
+
+(function() {
+  Game.UpdateManager = (function() {
+    UpdateManager.prototype.containerWorld = null;
+
+    UpdateManager.prototype.containerUI = null;
+
+    UpdateManager.prototype.dialog = null;
+
+    UpdateManager.prototype.player = null;
+
+    UpdateManager.prototype.city = null;
+
+    UpdateManager.prototype.items = [];
+
+    UpdateManager.prototype.time = null;
+
+    function UpdateManager(containerWorld, containerUI) {
+      this.containerWorld = containerWorld;
+      this.containerUI = containerUI;
+    }
+
+    UpdateManager.prototype.dt = function() {
+      var dt, now;
+      now = Date.now();
+      dt = now - (this.time || now);
+      dt *= 0.001;
+      this.time = now;
+      return dt;
+    };
+
+    UpdateManager.prototype.updateAll = function() {
+      var dt, object, _i, _len, _ref;
+      dt = this.dt();
+      if (this.dialog.active) {
+        this.dialog.update(dt);
+      } else {
+        this.city.update(dt);
+        this.player.update(dt);
+        _ref = this.items;
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          object = _ref[_i];
+          object.update(dt);
+          if (this.ifPlayerCollision(object)) {
+            object.playerCollision();
+          }
+        }
+      }
+      this.containerWorld.position.x = Game.SCREEN_SIZE.Xhalf - this.player.sprite.position.x;
+      return this.containerWorld.position.y = Game.SCREEN_SIZE.Yhalf - this.player.sprite.position.y;
+    };
+
+    UpdateManager.prototype.ifPlayerCollision = function(object) {
+      var dist, distX, distY;
+      distX = this.player.sprite.position.x - object.sprite.position.x;
+      distY = this.player.sprite.position.y - object.sprite.position.y;
+      dist = Math.sqrt((distX * distX) + (distY * distY));
+      return dist <= (this.player.size + object.size);
+    };
+
+    return UpdateManager;
 
   })();
 
@@ -123,16 +244,14 @@
   };
 
   Game.InputManager = (function() {
-    function InputManager() {}
-
-    InputManager.prototype.init = function(window) {
+    function InputManager() {
       window.addEventListener('keyup', (function(event) {
         return Game.Key.onKeyup(event);
       }), false);
-      return window.addEventListener('keydown', (function(event) {
+      window.addEventListener('keydown', (function(event) {
         return Game.Key.onKeydown(event);
       }), false);
-    };
+    }
 
     return InputManager;
 
@@ -142,7 +261,9 @@
 
 (function() {
   Game.Player = (function() {
-    Player.prototype.speed = 10;
+    Player.prototype.speed = 200;
+
+    Player.prototype.size = 10;
 
     function Player(x, y, stage) {
       this.sprite = new PIXI.Sprite(Game.getTextureFromFrame("bunny"));
@@ -191,27 +312,44 @@
 }).call(this);
 
 (function() {
-  var SCREEN_SIZE, animate, dialogueBox, input, loader, onAssetsLoaded, player, renderer, stage, time;
+  var animate, assetsLoaded, containerUI, containerWorld, input, loader, onAssetsLoaded, renderer, stage, updater;
 
   stage = new PIXI.Stage(0x000000);
 
-  SCREEN_SIZE = {
+  containerUI = new PIXI.DisplayObjectContainer();
+
+  containerWorld = new PIXI.DisplayObjectContainer();
+
+  stage.addChild(containerWorld);
+
+  stage.addChild(containerUI);
+
+  Game.SCREEN_SIZE = {
     X: 800,
     Y: 600
   };
 
-  renderer = PIXI.autoDetectRenderer(SCREEN_SIZE.X, SCREEN_SIZE.Y, null);
+  Game.SCREEN_SIZE.Xhalf = Game.SCREEN_SIZE.X / 2;
+
+  Game.SCREEN_SIZE.Yhalf = Game.SCREEN_SIZE.Y / 2;
+
+  renderer = PIXI.autoDetectRenderer(Game.SCREEN_SIZE.X, Game.SCREEN_SIZE.Y, null);
 
   document.body.appendChild(renderer.view);
 
-  input = new Game.InputManager(window);
+  input = new Game.InputManager;
 
-  dialogueBox = new Game.DialogueBox(stage);
+  updater = new Game.UpdateManager(containerWorld, containerUI);
 
-  player = null;
+  assetsLoaded = false;
 
   onAssetsLoaded = function() {
-    return player = new Game.Player(200, 150, stage);
+    updater.city = new Game.City(containerWorld);
+    updater.items.push(new Game.Item(400, 400, containerWorld));
+    updater.items.push(new Game.Item(400, 500, containerWorld));
+    updater.player = new Game.Player(400, 150, containerWorld);
+    updater.dialog = new Game.DialogueBox(containerUI);
+    return assetsLoaded = true;
   };
 
   loader = new PIXI.AssetLoader(['assets/main0.json']);
@@ -220,18 +358,10 @@
 
   loader.load();
 
-  time = null;
-
   animate = function() {
-    var dt, now;
     requestAnimFrame(animate);
-    now = Date.now();
-    dt = now - (time || now);
-    dt *= 0.001;
-    time = now;
-    dialogueBox.update(dt);
-    if (player != null) {
-      player.update(dt);
+    if (assetsLoaded === true) {
+      updater.updateAll();
     }
     return renderer.render(stage);
   };

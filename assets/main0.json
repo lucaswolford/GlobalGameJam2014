@@ -1,9 +1,49 @@
 {
   "frames": {
-    "bunny.png": {
+    "worldbg.png": {
       "frame": {
         "x": 0,
         "y": 0,
+        "w": 1200,
+        "h": 1000
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 1200,
+        "h": 1000
+      },
+      "sourceSize": {
+        "w": 1200,
+        "h": 1000
+      }
+    },
+    "item.png": {
+      "frame": {
+        "x": 0,
+        "y": 1000,
+        "w": 64,
+        "h": 64
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 64,
+        "h": 64
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      }
+    },
+    "bunny.png": {
+      "frame": {
+        "x": 64,
+        "y": 1000,
         "w": 26,
         "h": 37
       },
@@ -27,8 +67,8 @@
     "image": "main0.png",
     "format": "RGBA8888",
     "size": {
-      "w": 26,
-      "h": 37
+      "w": 1200,
+      "h": 1064
     },
     "scale": 1
   }
