@@ -1,88 +1,8 @@
 {
   "frames": {
-    "asteroid1.png": {
-      "frame": {
-        "x": 0,
-        "y": 0,
-        "w": 64,
-        "h": 64
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 64,
-        "h": 64
-      },
-      "sourceSize": {
-        "w": 64,
-        "h": 64
-      }
-    },
-    "asteroid2.png": {
-      "frame": {
-        "x": 64,
-        "y": 0,
-        "w": 64,
-        "h": 64
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 64,
-        "h": 64
-      },
-      "sourceSize": {
-        "w": 64,
-        "h": 64
-      }
-    },
-    "asteroid3.png": {
-      "frame": {
-        "x": 0,
-        "y": 64,
-        "w": 64,
-        "h": 64
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 64,
-        "h": 64
-      },
-      "sourceSize": {
-        "w": 64,
-        "h": 64
-      }
-    },
-    "player.png": {
-      "frame": {
-        "x": 64,
-        "y": 64,
-        "w": 42,
-        "h": 32
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 42,
-        "h": 32
-      },
-      "sourceSize": {
-        "w": 42,
-        "h": 32
-      }
-    },
     "bunny.png": {
       "frame": {
-        "x": 128,
+        "x": 0,
         "y": 0,
         "w": 26,
         "h": 37
@@ -98,26 +18,6 @@
       "sourceSize": {
         "w": 26,
         "h": 37
-      }
-    },
-    "bullet.png": {
-      "frame": {
-        "x": 64,
-        "y": 96,
-        "w": 32,
-        "h": 6
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 32,
-        "h": 6
-      },
-      "sourceSize": {
-        "w": 32,
-        "h": 6
       }
     }
   },
@@ -127,8 +27,8 @@
     "image": "main0.png",
     "format": "RGBA8888",
     "size": {
-      "w": 154,
-      "h": 128
+      "w": 26,
+      "h": 37
     },
     "scale": 1
   }

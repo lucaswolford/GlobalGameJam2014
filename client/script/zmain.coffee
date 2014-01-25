@@ -10,8 +10,13 @@ document.body.appendChild(renderer.view)
 input = new Game.InputManager(window)
 dialogueBox = new Game.DialogueBox(stage)
 
-player = new Game.Player(100,100)
-stage.addChild(player.sprite)
+player = null
+onAssetsLoaded = () ->
+  player = new Game.Player(200,150, stage)
+
+loader = new PIXI.AssetLoader(['assets/main0.json'])
+loader.onComplete = onAssetsLoaded; # use callback
+loader.load(); #begin load
 
 time = null
 animate = () ->
@@ -23,7 +28,7 @@ animate = () ->
   time = now
 
   dialogueBox.update(dt)
-  player.update(dt)
+  player.update(dt) if player?
 
   renderer.render(stage)
 

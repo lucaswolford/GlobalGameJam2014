@@ -1,11 +1,12 @@
 class Game.Player
   speed: 10
-  constructor: (x,y) ->
+  constructor: (x,y, stage) ->
     @sprite = new PIXI.Sprite(Game.getTextureFromFrame("bunny"))
     @sprite.anchor.x = 0.5
     @sprite.anchor.y = 0.5
     @sprite.position.x = x
     @sprite.position.y = y
+    stage.addChild(@sprite)
 
   update: (dt) ->
     @moveUp(dt) if (Game.Key.isDown(Game.Key.UP))
