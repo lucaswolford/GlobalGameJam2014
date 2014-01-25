@@ -1,0 +1,35 @@
+{
+  "frames": {
+    "bunny.png": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 26,
+        "h": 37
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 26,
+        "h": 37
+      },
+      "sourceSize": {
+        "w": 26,
+        "h": 37
+      }
+    }
+  },
+  "meta": {
+    "app": "http://www.texturepacker.com",
+    "version": "1.0",
+    "image": "main0.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 26,
+      "h": 37
+    },
+    "scale": 1
+  }
+}
