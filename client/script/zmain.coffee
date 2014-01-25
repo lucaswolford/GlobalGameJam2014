@@ -11,13 +11,13 @@ input = new Game.InputManager
 
 updater = new Game.UpdateManager
 
-player = null
+#player = null
 assetsLoaded = false
 
 onAssetsLoaded = () ->
 
   updater.city = new Game.City(stage)
-  updater.player = new Game.Player(200,150, stage)
+  updater.player = new Game.Player(400, 150, stage)
   updater.dialog = new Game.DialogueBox(stage)
 
   updater.items.push new Game.Item(400,400, stage)
@@ -32,6 +32,7 @@ loader.load(); #begin load
 animate = () ->
   requestAnimFrame( animate )
 
+#  stage.position.x = player.sprite.position.x if player?
   updater.updateAll() if assetsLoaded == true
 
   renderer.render(stage)
