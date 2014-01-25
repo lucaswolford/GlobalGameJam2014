@@ -7,15 +7,18 @@ SCREEN_SIZE =
 renderer = PIXI.autoDetectRenderer(SCREEN_SIZE.X, SCREEN_SIZE.Y, null)
 document.body.appendChild(renderer.view)
 
-text = new PIXI.Text("Text", {font: "bold italic 14px Arvo", fill: "#eeffee", align: "left", stroke: "#ddeeff", strokeThickness: 1})
-text.position.x = 200
-text.position.y = 5
-text.anchor.x = text.anchor.y = 0
-stage.addChild(text)
+dialogueBox = new Game.DialogueBox(stage)
 
-
+time = null
 animate = () ->
   requestAnimFrame( animate )
+
+  now = Date.now()
+  dt = (now - (time || now)) #delta time in ms
+  dt *= 0.001 #delta time in sec
+  time = now
+
+  dialogueBox.update(dt)
 
   renderer.render(stage)
 
