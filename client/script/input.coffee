@@ -3,6 +3,7 @@ Game.Key =
 
   SPACE: 32
   ENTER: 13
+  CTRL: 17
   LEFT: 37
   UP: 38
   RIGHT: 39

@@ -28,12 +28,12 @@ class Game.UpdateManager
       @player.update(dt)
       for item in @items
         item.update(dt)
-        if @ifPlayerCollision(item) && (Game.Key.isDown(Game.Key.ENTER))
+        if @ifPlayerCollision(item) && (Game.Key.isDown(Game.Key.SPACE))
           item.playerActivated()
 
       for npc in @npcs
         npc.update(dt)
-        if @ifPlayerCollision(npc) && (Game.Key.isDown(Game.Key.ENTER))
+        if @ifPlayerCollision(npc) && (Game.Key.isDown(Game.Key.SPACE)) && npc.active == false
           npc.playerActivated(@dialog)
 
     # Scrolling

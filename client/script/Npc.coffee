@@ -2,6 +2,7 @@ class Game.Npc
   size: 10
   name: null
   mood: null
+  active: false
 
   constructor: (x,y, stage, name, mood) ->
     @sprite = new PIXI.Sprite(Game.getTextureFromFrame("bunny"))
@@ -17,4 +18,8 @@ class Game.Npc
     null
 
   playerActivated: (dialog) ->
+    @toggleActive()
     dialog.playScript(@name, @mood)
+
+  toggleActive: ->
+    @active = !@active
