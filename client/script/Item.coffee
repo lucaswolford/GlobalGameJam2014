@@ -1,8 +1,8 @@
 class Game.Item
-  size: 10
+  size: 32
 
   constructor: (x,y, stage) ->
-    @sprite = new PIXI.Sprite(Game.getTextureFromFrame("bunny"))
+    @sprite = new PIXI.Sprite(Game.getTextureFromFrame("item"))
     @sprite.anchor.x = 0.5
     @sprite.anchor.y = 0.5
     @sprite.position.x = x
