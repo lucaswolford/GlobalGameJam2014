@@ -15,7 +15,9 @@ class Game.DialogueBox
     @playScript('detective', 'initial')
 
   update: (dt) ->
-    @text.setText(@getGameDialogue()[0..@visiblePosition])
+    text = @getGameDialogueSpeaker() + ": "
+    text += @getGameDialogue()[0..@visiblePosition]
+    @text.setText(text)
     @visiblePosition += @textSpeed * dt
 
   keydown: (event) ->
@@ -38,8 +40,17 @@ class Game.DialogueBox
   isAtEndOfLine: ->
     @visiblePosition >= @getGameDialogue().length
 
+  getGameDialogueSpeaker: ->
+    Game.dialogue[@npc][@mood][@index].speaking
   getGameDialogue: ->
-    Game.dialogue[@npc][@mood][@index]
+    @addNewLines(Game.dialogue[@npc][@mood][@index].text)
+
+  addNewLines: (text) ->
+    newLines = text.length / 45
+    if newLines > 1
+      for index in _.range(1, newLines)
+        text = text[0..(index*40)] + '\n' + text[((index*40) + 1)..text.length]
+    text
 
   hide: ->
     @text.setText('')
