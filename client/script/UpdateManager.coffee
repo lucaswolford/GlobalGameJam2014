@@ -140,8 +140,15 @@ class Game.UpdateManager
       Game.SCREEN_SIZE.Yhalf), @city.height  - Game.SCREEN_SIZE.Yhalf)
 
   updateShowdown: (dt) ->
-    @dialog.update(dt)
-    @nextState() if (Game.Key.isDown(Game.Key.SPACE)) && @dialog.active == false
+    if (Game.Key.isDown(Game.Key.ENTER)) &&
+        @dialog.active == false &&
+        @actionQuestion.active == false
+      @nextState()
+
+    if @dialog.active
+      @dialog.update(dt)
+    else
+      @actionQuestion.update(dt)
 
   updateWrapUp: (dt) ->
     @dialog.update(dt)
@@ -161,6 +168,7 @@ class Game.UpdateManager
     @stage.addChild(@containerInterro)
     @stage.addChild(@containerUI)
     @dialog.playScript('detective', 'initial')
+    @moodQuestion.active = true
   interrogationRemoveAssets: ->
     @stage.removeChild(@containerInterro)
     @stage.removeChild(@containerUI)
@@ -176,6 +184,7 @@ class Game.UpdateManager
     @stage.addChild(@containerShowdown)
     @stage.addChild(@containerUI)
     @dialog.playScript('showdown', 'ending1')
+    @actionQuestion.active = true
   showdowndRemoveAssetst: ->
     @stage.removeChild(@containerShowdown)
     @stage.removeChild(@containerUI)

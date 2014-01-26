@@ -1,7 +1,7 @@
 class Game.Question
   selection: 0
   question: null
-  active: true
+  active: false
   answer: null
 
   constructor: (stage, question) ->
@@ -25,7 +25,7 @@ class Game.Question
     @displayAnswers()
 
   finalize: ->
-    @text.setText("a")
+    @text.setText('')
     @answer = @selection
     @active = false
 
@@ -40,7 +40,7 @@ class Game.Question
     if @active == true
       for answer in @getAnswers()
         if index == @selection
-          text += '*' 
+          text += '*'
         else
           text += ' '
         text += answer + '\n'

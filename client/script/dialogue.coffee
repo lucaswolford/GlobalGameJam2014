@@ -103,6 +103,7 @@ Game.answers =
       "sad"
       "angry"
     ]
+
   action:
     [
       "stab a bitch"

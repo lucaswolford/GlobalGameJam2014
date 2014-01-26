@@ -48,6 +48,8 @@ onAssetsLoaded = () ->
 #showdown
   showdownBg = new PIXI.Sprite(Game.getTextureFromFrame("showdown"))
   containerShowdown.addChild(showdownBg)
+  updater.actionQuestion = new Game.Question(containerUI, 'action')
+
 #wrapup
   wrapupBg = new PIXI.Sprite(Game.getTextureFromFrame("interrogation"))
   containerInterro.addChild(wrapupBg)
