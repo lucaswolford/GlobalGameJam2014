@@ -102,6 +102,7 @@ class Game.UpdateManager
     else
       @city.update(dt)
       @player.update(dt)
+      playerIsColliding = false
       for item in @items
         item.update(dt)
         if @ifPlayerCollision(item) && (Game.Key.isDown(Game.Key.SPACE))
@@ -112,7 +113,14 @@ class Game.UpdateManager
         if @ifPlayerCollision(npc) && (Game.Key.isDown(Game.Key.SPACE)) && npc.active == false
           npc.playerActivated(@dialog)
 
-      @player.updateCouldMove !@worldCollisionRects.isPlayerColliding(@player)
+      # rectangle walls
+      playerIsColliding = true if @worldCollisionRects.isPlayerColliding(@player)
+
+      # X boundry
+      if @player.positionDesired.x < @player.size || @player.positionDesired.x > @city.width - @player.size
+        playerIsColliding = true
+
+      @player.updateCouldMove !playerIsColliding
 
     # Scrolling
     @containerWorld.position.x = Game.SCREEN_SIZE.Xhalf - Math.min(Math.max(@player.sprite.position.x,
