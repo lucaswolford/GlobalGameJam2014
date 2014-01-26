@@ -55,7 +55,7 @@ onAssetsLoaded = () ->
   endBg = new PIXI.Sprite(Game.getTextureFromFrame("end"))
   containerEnd.addChild(endBg)
 
-#  new Game.DevRectDraw(containerWorld)
+  new Game.DevRectDraw(containerWorld)
 
   assetsLoaded = true
 
