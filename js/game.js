@@ -107,12 +107,12 @@
       var _this = this;
       this.text = new PIXI.Text("", {
         font: "bold italic 36px Arvo",
-        fill: "#11FF11",
+        fill: "#EEEEEE",
         align: "left",
-        stroke: "#22FF00",
-        strokeThickness: 1
+        stroke: "#333333",
+        strokeThickness: 5
       });
-      this.text.position.x = 30;
+      this.text.position.x = 35;
       this.text.position.y = 10;
       this.text.anchor.x = this.text.anchor.y = 0;
       stage.addChild(this.text);
@@ -123,7 +123,10 @@
     }
 
     DialogueBox.prototype.update = function(dt) {
-      this.text.setText(this.getGameDialogue().slice(0, +this.visiblePosition + 1 || 9e9));
+      var text;
+      text = this.getGameDialogueSpeaker() + ": \n";
+      text += this.getGameDialogue().slice(0, +this.visiblePosition + 1 || 9e9);
+      this.text.setText(text);
       return this.visiblePosition += this.textSpeed * dt;
     };
 
@@ -154,8 +157,25 @@
       return this.visiblePosition >= this.getGameDialogue().length;
     };
 
+    DialogueBox.prototype.getGameDialogueSpeaker = function() {
+      return Game.dialogue[this.npc][this.mood][this.index].speaking;
+    };
+
     DialogueBox.prototype.getGameDialogue = function() {
-      return Game.dialogue[this.npc][this.mood][this.index];
+      return this.addNewLines(Game.dialogue[this.npc][this.mood][this.index].text);
+    };
+
+    DialogueBox.prototype.addNewLines = function(text) {
+      var index, newLines, _i, _len, _ref;
+      newLines = text.length / 45;
+      if (newLines > 1) {
+        _ref = _.range(1, newLines);
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          index = _ref[_i];
+          text = text.slice(0, +(index * 40) + 1 || 9e9) + '\n' + text.slice((index * 40) + 1, +text.length + 1 || 9e9);
+        }
+      }
+      return text;
     };
 
     DialogueBox.prototype.hide = function() {
@@ -206,7 +226,7 @@
 
 (function() {
   Game.Npc = (function() {
-    Npc.prototype.size = 20;
+    Npc.prototype.size = 50;
 
     Npc.prototype.name = null;
 
@@ -214,24 +234,23 @@
 
     Npc.prototype.active = false;
 
-    function Npc(x, y, stage, name, mood) {
-      this.sprite = new PIXI.Sprite(Game.getTextureFromFrame("bunny"));
+    function Npc(x, y, stage, name) {
+      this.sprite = new PIXI.Sprite(Game.getTextureFromFrame("NPC_" + name));
       this.sprite.anchor.x = 0.5;
       this.sprite.anchor.y = 0.5;
       this.sprite.position.x = x;
       this.sprite.position.y = y;
       stage.addChild(this.sprite);
       this.name = name;
-      this.mood = mood;
     }
 
     Npc.prototype.update = function() {
       return null;
     };
 
-    Npc.prototype.playerActivated = function(dialog) {
+    Npc.prototype.playerActivated = function(dialog, mood) {
       this.toggleActive();
-      return dialog.playScript(this.name, this.mood);
+      return dialog.playScript(this.name, mood);
     };
 
     Npc.prototype.toggleActive = function() {
@@ -250,7 +269,7 @@
 
     Question.prototype.question = null;
 
-    Question.prototype.active = true;
+    Question.prototype.active = false;
 
     Question.prototype.answer = null;
 
@@ -258,10 +277,10 @@
       var _this = this;
       this.text = new PIXI.Text("", {
         font: "bold italic 36px Arvo",
-        fill: "#11FF11",
+        fill: "#EEEEEE",
         align: "left",
-        stroke: "#22FF00",
-        strokeThickness: 1
+        stroke: "#333333",
+        strokeThickness: 5
       });
       this.text.position.x = 40;
       this.text.position.y = 10;
@@ -288,8 +307,8 @@
     };
 
     Question.prototype.finalize = function() {
-      this.text.setText("a");
-      this.answer = this.selection;
+      this.text.setText('');
+      this.answer = this.getAnswers()[this.selection].value;
       return this.active = false;
     };
 
@@ -310,28 +329,73 @@
       text = '';
       index = 0;
       if (this.active === true) {
+        text += this.getQuestion() + '\n';
         _ref = this.getAnswers();
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           answer = _ref[_i];
           if (index === this.selection) {
-            text += '*';
+            text += '>';
           } else {
-            text += ' ';
+            text += '  ';
           }
-          text += answer + '\n';
+          text += answer.displayText + '\n';
           index++;
         }
       }
       return this.text.setText(text);
     };
 
+    Question.prototype.getQuestion = function() {
+      return Game.answers[this.question]['question'];
+    };
+
     Question.prototype.getAnswers = function() {
-      return Game.answers[this.question];
+      return Game.answers[this.question]['answers'];
     };
 
     return Question;
 
   })();
+
+}).call(this);
+
+(function() {
+  var __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+  Game.SpriteAnimation = (function(_super) {
+    __extends(SpriteAnimation, _super);
+
+    SpriteAnimation.prototype.textures = null;
+
+    SpriteAnimation.prototype.timePerFrame = 1;
+
+    SpriteAnimation.prototype.timeUntilNextFrame = 1;
+
+    SpriteAnimation.prototype.frameCur = 0;
+
+    function SpriteAnimation(textures, timePerFrame) {
+      if (!_.isArray(textures)) {
+        throw Error("bad arg");
+      }
+      this.textures = textures;
+      this.timePerFrame = timePerFrame;
+      this.timeUntilNextFrame = timePerFrame;
+      SpriteAnimation.__super__.constructor.call(this, textures[0]);
+    }
+
+    SpriteAnimation.prototype.update = function(dt) {
+      this.timeUntilNextFrame -= dt;
+      if (this.timeUntilNextFrame <= 0) {
+        this.timeUntilNextFrame += this.timePerFrame;
+        this.frameCur = (this.frameCur + 1) % this.textures.length;
+        return this.setTexture(this.textures[this.frameCur]);
+      }
+    };
+
+    return SpriteAnimation;
+
+  })(PIXI.Sprite);
 
 }).call(this);
 
@@ -458,7 +522,7 @@
     };
 
     UpdateManager.prototype.updateTitle = function(dt) {
-      if (Game.Key.isDown(Game.Key.SPACE)) {
+      if (Game.Key.isDown(Game.Key.SPACE) || Game.Key.isDown(Game.Key.TOUCH)) {
         return this.nextState();
       }
     };
@@ -498,7 +562,7 @@
           npc = _ref1[_j];
           npc.update(dt);
           if (this.ifPlayerCollision(npc) && (Game.Key.isDown(Game.Key.SPACE)) && npc.active === false) {
-            npc.playerActivated(this.dialog);
+            npc.playerActivated(this.dialog, this.moodQuestion.answer);
           }
         }
         if (this.worldCollisionRects.isPlayerColliding(this.player)) {
@@ -514,9 +578,13 @@
     };
 
     UpdateManager.prototype.updateShowdown = function(dt) {
-      this.dialog.update(dt);
-      if ((Game.Key.isDown(Game.Key.SPACE)) && this.dialog.active === false) {
-        return this.nextState();
+      if ((Game.Key.isDown(Game.Key.ENTER)) && this.dialog.active === false && this.actionQuestion.active === false) {
+        this.nextState();
+      }
+      if (this.dialog.active) {
+        return this.dialog.update(dt);
+      } else {
+        return this.actionQuestion.update(dt);
       }
     };
 
@@ -544,10 +612,12 @@
     UpdateManager.prototype.interrogationAddAssets = function() {
       this.stage.addChild(this.containerInterro);
       this.stage.addChild(this.containerUI);
-      return this.dialog.playScript('detective', 'initial');
+      this.dialog.playScript('detective', 'initial');
+      return this.moodQuestion.active = true;
     };
 
     UpdateManager.prototype.interrogationRemoveAssets = function() {
+      this.dialog.playScript('detective', this.moodQuestion.answer);
       this.stage.removeChild(this.containerInterro);
       return this.stage.removeChild(this.containerUI);
     };
@@ -565,7 +635,8 @@
     UpdateManager.prototype.showdowndAddAssetst = function() {
       this.stage.addChild(this.containerShowdown);
       this.stage.addChild(this.containerUI);
-      return this.dialog.playScript('showdown', 'ending1');
+      this.dialog.playScript('showdown', 'ending1');
+      return this.actionQuestion.active = true;
     };
 
     UpdateManager.prototype.showdowndRemoveAssetst = function() {
@@ -680,37 +751,285 @@
 (function() {
   Game.dialogue = {
     detective: {
-      initial: ["Wow! Much dialogue. Such text.", "init dialogue line 2"],
-      final1: ["final dialogue 1 line 1", "final dialogue 1 line 2"],
-      final2: ["final dialogue 2 line 1", "final dialogue 2 line 2"]
+      initial: [
+        {
+          speaking: "Detective",
+          text: "Man what a mess"
+        }, {
+          speaking: "Detective",
+          text: "3 people, 3 stories"
+        }, {
+          speaking: "Detective",
+          text: "Each of them brings up"
+        }, {
+          speaking: "Detective",
+          text: "inconsistencies with another."
+        }, {
+          speaking: "Detective",
+          text: "Maybe your story will clear up the confusion."
+        }, {
+          speaking: "Detective",
+          text: "(or at least clear up some the inconsistencies between the other stories)"
+        }, {
+          speaking: "Detective",
+          text: "But before we begin,"
+        }, {
+          speaking: "Detective",
+          text: "I would like to ask you a question:"
+        }, {
+          speaking: "Detective",
+          text: "How do you feel?"
+        }
+      ],
+      sad: [
+        {
+          speaking: "Detective",
+          text: "Sad?"
+        }, {
+          speaking: "Detective",
+          text: "Why do you feel that way?"
+        }, {
+          speaking: "You",
+          text: "... *sigh*"
+        }, {
+          speaking: "Detective",
+          text: "All right then."
+        }, {
+          speaking: "Detective",
+          text: "Let's start at the beginning."
+        }, {
+          speaking: "Detective",
+          text: "You mentioned to the police that you left your home shortly before the incident to go for a walk?"
+        }, {
+          speaking: "Detective",
+          text: "Is that correct?"
+        }, {
+          speaking: "Detective",
+          text: "Walk me through what happened from there. "
+        }
+      ],
+      angry: [
+        {
+          speaking: "Detective",
+          text: "Angry?"
+        }, {
+          speaking: "Detective",
+          text: "Why do you feel that way?"
+        }, {
+          speaking: "You",
+          text: "..."
+        }, {
+          speaking: "Detective",
+          text: "All right then."
+        }, {
+          speaking: "Detective",
+          text: "Let's start at the beginning."
+        }, {
+          speaking: "Detective",
+          text: "You mentioned to the police that you left your home shortly before the incident to go for a walk?"
+        }, {
+          speaking: "Detective",
+          text: "Is that correct?"
+        }, {
+          speaking: "Detective",
+          text: "Walk me through what happened from there. "
+        }
+      ],
+      happy: [
+        {
+          speaking: "Detective",
+          text: "Relieved?"
+        }, {
+          speaking: "Detective",
+          text: "Why do you feel that way?"
+        }, {
+          speaking: "You",
+          text: "Well this isn't exactly how I thought my day would go,"
+        }, {
+          speaking: "You",
+          text: "but I feel so...good about how things turned out."
+        }, {
+          speaking: "Detective",
+          text: "All right then."
+        }, {
+          speaking: "Detective",
+          text: "Let's start at the beginning."
+        }, {
+          speaking: "Detective",
+          text: "You mentioned to the police that you left your home shortly before the incident to go for a walk?"
+        }, {
+          speaking: "Detective",
+          text: "Is that correct?"
+        }, {
+          speaking: "Detective",
+          text: "Walk me through what happened from there."
+        }
+      ],
+      final1: [
+        {
+          speaking: "Detective",
+          text: "final dialogue 1 line 1"
+        }, {
+          speaking: "Detective",
+          text: "final dialogue 1 line 2"
+        }
+      ],
+      final2: [
+        {
+          speaking: "Detective",
+          text: "final dialogue 2 line 1"
+        }, {
+          speaking: "Detective",
+          text: "final dialogue 2 line 2"
+        }
+      ]
     },
     showdown: {
-      ending1: ["ending 1 line 1", "ending 1 line 2", "ending 1 line 3"],
-      ending2: ["ending 2 line 1", "ending 2 line 2", "ending 2 line 3"]
+      ending1: [
+        {
+          speaking: "",
+          text: "ending 1 line 1"
+        }, {
+          speaking: "",
+          text: "ending 1 line 2"
+        }, {
+          speaking: "",
+          text: "ending 1 line 3"
+        }
+      ],
+      ending2: [
+        {
+          speaking: '',
+          text: "ending 2 line 1"
+        }, {
+          speaking: '',
+          text: "ending 2 line 2"
+        }, {
+          speaking: '',
+          text: "ending 2 line 3"
+        }
+      ]
     },
     hobo: {
-      relieved: ["hobo relieved", "second line"],
-      angry: ["hobo angry", "second line"],
-      sad: ["hobo sad", "second line"],
-      responsible: ["hobo responsible", "second line"]
+      happy: [
+        {
+          speaking: 'Gretchen',
+          text: "Do you have any spare change, mista?"
+        }, {
+          speaking: 'You',
+          text: "I wish I could help."
+        }
+      ],
+      angry: [
+        {
+          speaking: 'Gretchen',
+          text: "OY! Can you help a poor woman out?"
+        }, {
+          speaking: 'You',
+          text: "I'm sorry I can't help you."
+        }
+      ],
+      sad: [
+        {
+          speaking: 'Gretchen',
+          text: "Can you...help me, mista?"
+        }, {
+          speaking: 'You',
+          text: "Back off! I don't have any money."
+        }
+      ]
     },
     victim: {
-      relieved: ["victim relieved", "second line"],
-      angry: ["victim angry", "second line"],
-      sad: ["victim sad", "second line"],
-      responsible: ["victim responsible", "second line"]
+      happy: [
+        {
+          speaking: 'Vicky',
+          text: "I'm a a little lost, would you mind giving me directions to Envy Labs?"
+        }, {
+          speaking: 'You',
+          text: "It's just up the street."
+        }, {
+          speaking: 'Vicky',
+          text: "Oh thank you! I would have never found it."
+        }
+      ],
+      angry: [
+        {
+          speaking: 'Vicky',
+          text: "Ugh, can you help me find my way out of here?"
+        }, {
+          speaking: 'You',
+          text: "Yeah, you look lost. Good luck with that"
+        }, {
+          speaking: 'Vicky',
+          text: "Jerk."
+        }
+      ],
+      sad: [
+        {
+          speaking: 'Vicky',
+          text: "I don't know where I am...can you...help me?"
+        }, {
+          speaking: 'You',
+          text: "Uhhh...no, I'm sorry I can't help you."
+        }, {
+          speaking: 'Vicky',
+          text: "Ugh, I'm never going to find Envy Labs."
+        }
+      ]
     },
     bystander: {
-      relieved: ["bystander relieved", "second line"],
-      angry: ["bystander angry", "second line"],
-      sad: ["bystander sad", "second line"],
-      responsible: ["bystander responsible", "second line"]
+      happy: [
+        {
+          speaking: 'Drake',
+          text: "Hey man, how are you doing?"
+        }
+      ],
+      angry: [
+        {
+          speaking: 'Drake',
+          text: "What're you doing?"
+        }
+      ],
+      sad: [
+        {
+          speaking: 'Drake',
+          text: "Hey man, what's wrong?"
+        }
+      ]
     }
   };
 
   Game.answers = {
-    mood: ["happy", "sad", "angry"],
-    action: ["stab a bitch", "give $$$", "can't we all just get along?"]
+    mood: {
+      question: "I feel ...",
+      answers: [
+        {
+          value: "happy",
+          displayText: "... relieved."
+        }, {
+          value: "sad",
+          displayText: "... sad."
+        }, {
+          value: "angry",
+          displayText: "... angry!"
+        }
+      ]
+    },
+    action: {
+      question: "What do you do?",
+      answers: [
+        {
+          value: "stab",
+          displayText: "stab a bitch"
+        }, {
+          value: "giveCash",
+          displayText: "give $$$"
+        }, {
+          value: "reason",
+          displayText: "can't we all just get along?"
+        }
+      ]
+    }
   };
 
 }).call(this);
@@ -725,6 +1044,11 @@
     UP: 38,
     RIGHT: 39,
     DOWN: 40,
+    W: 87,
+    A: 65,
+    S: 83,
+    D: 68,
+    TOUCH: -1,
     isDown: function(keyCode) {
       return this._pressed[keyCode];
     },
@@ -737,13 +1061,24 @@
   };
 
   Game.InputManager = (function() {
-    function InputManager() {
+    function InputManager(stage) {
       window.addEventListener('keyup', (function(event) {
         return Game.Key.onKeyup(event);
       }), false);
       window.addEventListener('keydown', (function(event) {
         return Game.Key.onKeydown(event);
       }), false);
+      stage.interactive = true;
+      stage.touchdown = stage.mousedown = function() {
+        return Game.Key.onKeydown({
+          keyCode: Game.Key.TOUCH
+        });
+      };
+      stage.touchend = stage.touchendoutside = stage.mouseup = function() {
+        return Game.Key.onKeyup({
+          keyCode: Game.Key.TOUCH
+        });
+      };
     }
 
     return InputManager;
@@ -760,51 +1095,93 @@
 
     Player.prototype.positionDesired = null;
 
+    Player.prototype.sprites = {};
+
+    Player.prototype.curDir = 'down';
+
+    Player.prototype.isMoving = false;
+
     function Player(x, y, stage) {
-      this.sprite = new PIXI.Sprite(Game.getTextureFromFrame("bunny"));
+      this.sprites = {
+        left: this._prepDirection('playerLeft', x, y, stage),
+        right: this._prepDirection('playerRight', x, y, stage),
+        up: this._prepDirection('playerUp', x, y, stage),
+        down: this._prepDirection('playerDown', x, y, stage)
+      };
+      this.setDir('down');
+      this.positionDesired = this.sprite.position.clone();
+    }
+
+    Player.prototype._prepDirection = function(baseName, x, y, stage) {
+      this.sprite = new Game.SpriteAnimation(Game.getTexturesFromFrameBase(baseName), 0.5);
       this.sprite.anchor.x = 0.5;
       this.sprite.anchor.y = 0.5;
       this.sprite.position.x = x;
       this.sprite.position.y = y;
       stage.addChild(this.sprite);
-      this.positionDesired = this.sprite.position.clone();
-    }
+      this.sprite.alpha = 0;
+      return this.sprite;
+    };
+
+    Player.prototype.setDir = function(dir) {
+      this.sprites[this.curDir].alpha = 0;
+      this.sprites[dir].alpha = 1;
+      return this.curDir = dir;
+    };
 
     Player.prototype.update = function(dt) {
-      if (Game.Key.isDown(Game.Key.UP)) {
+      var _this = this;
+      this.isMoving = false;
+      if ((Game.Key.isDown(Game.Key.UP)) || (Game.Key.isDown(Game.Key.W))) {
         this.moveUp(dt);
       }
-      if (Game.Key.isDown(Game.Key.LEFT)) {
+      if ((Game.Key.isDown(Game.Key.LEFT)) || (Game.Key.isDown(Game.Key.A))) {
         this.moveLeft(dt);
       }
-      if (Game.Key.isDown(Game.Key.DOWN)) {
+      if ((Game.Key.isDown(Game.Key.DOWN)) || (Game.Key.isDown(Game.Key.S))) {
         this.moveDown(dt);
       }
-      if (Game.Key.isDown(Game.Key.RIGHT)) {
-        return this.moveRight(dt);
+      if ((Game.Key.isDown(Game.Key.RIGHT)) || (Game.Key.isDown(Game.Key.D))) {
+        this.moveRight(dt);
+      }
+      if (this.isMoving) {
+        return _.each(_.keys(this.sprites), (function(dir) {
+          return _this.sprites[dir].update(dt);
+        }));
       }
     };
 
     Player.prototype.moveUp = function(dt) {
+      this.setDir('up');
+      this.isMoving = true;
       return this.positionDesired.y -= this.speed * dt;
     };
 
     Player.prototype.moveDown = function(dt) {
+      this.setDir('down');
+      this.isMoving = true;
       return this.positionDesired.y += this.speed * dt;
     };
 
     Player.prototype.moveRight = function(dt) {
+      this.setDir('right');
+      this.isMoving = true;
       return this.positionDesired.x += this.speed * dt;
     };
 
     Player.prototype.moveLeft = function(dt) {
+      this.setDir('left');
+      this.isMoving = true;
       return this.positionDesired.x -= this.speed * dt;
     };
 
     Player.prototype.updateCouldMove = function(couldMove) {
+      var _this = this;
       if (couldMove) {
-        this.sprite.position.x = this.positionDesired.x;
-        return this.sprite.position.y = this.positionDesired.y;
+        return _.each(_.keys(this.sprites), (function(dir) {
+          _this.sprites[dir].position.x = _this.positionDesired.x;
+          return _this.sprites[dir].position.y = _this.positionDesired.y;
+        }));
       } else {
         this.positionDesired.x = this.sprite.position.x;
         return this.positionDesired.y = this.sprite.position.y;
@@ -847,7 +1224,7 @@
 
   document.body.appendChild(renderer.view);
 
-  input = new Game.InputManager;
+  input = new Game.InputManager(stage);
 
   updater = new Game.UpdateManager(stage, containerWorld, containerUI, containerTitle, containerInterro, containerShowdown, containerEnd);
 
@@ -865,10 +1242,12 @@
     updater.items.push(new Game.Item(1260, 470, containerWorld));
     updater.player = new Game.Player(463, 460, containerWorld);
     updater.dialog = new Game.DialogueBox(containerUI);
-    updater.npcs.push(new Game.Npc(960, 470, containerWorld, 'hobo', 'sad'));
-    updater.npcs.push(new Game.Npc(1180, 680, containerWorld, 'victim', 'angry'));
+    updater.npcs.push(new Game.Npc(960, 430, containerWorld, 'hobo'));
+    updater.npcs.push(new Game.Npc(680, 430, containerWorld, 'bystander'));
+    updater.npcs.push(new Game.Npc(1180, 680, containerWorld, 'victim'));
     showdownBg = new PIXI.Sprite(Game.getTextureFromFrame("showdown"));
     containerShowdown.addChild(showdownBg);
+    updater.actionQuestion = new Game.Question(containerUI, 'action');
     wrapupBg = new PIXI.Sprite(Game.getTextureFromFrame("interrogation"));
     containerInterro.addChild(wrapupBg);
     endBg = new PIXI.Sprite(Game.getTextureFromFrame("end"));
