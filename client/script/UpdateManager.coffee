@@ -47,18 +47,24 @@ class Game.UpdateManager
     dt
 
   switchState: ->
-    #remove all children
-    for child in @stage.children
-      @stage.removeChild(child)
-
     switch @state
-      when @TITLE then @titleAddAssets()
-      when @INTERROGATION then @interrogationAddAssets()
-      when @TOPDOWN then @topDownAddAssets()
-      when @SHOWDOWN then @showdowndAddAssetst()
-      when @WRAPUP then @wrapUAddAssetsp()
-      when @END then @endAddAssets()
-
+      when @TITLE
+        @titleAddAssets()
+      when @INTERROGATION
+        @titleRemoveAssets()
+        @interrogationAddAssets()
+      when @TOPDOWN
+        @interrogationRemoveAssets()
+        @topDownAddAssets()
+      when @SHOWDOWN
+        @topDownRemoveAssets()
+        @showdowndAddAssetst()
+      when @WRAPUP
+        @showdowndRemoveAssetst()
+        @wrapUpAddAssets()
+      when @END
+        @wrapUpRemoveAssets()
+        @endAddAssets()
 
   updateGame: ->
     dt = @dt()
@@ -122,20 +128,34 @@ class Game.UpdateManager
   # CONTAINER
   titleAddAssets: ->
     @stage.addChild(@containerTitle)
+  titleRemoveAssets: ->
+    @stage.removeChild(@containerTitle)
 
   interrogationAddAssets: ->
     @stage.addChild(@containerInterro)
     @stage.addChild(@containerUI)
+  interrogationRemoveAssets: ->
+    @stage.removeChild(@containerInterro)
+    @stage.removeChild(@containerUI)
 
   topDownAddAssets: ->
     @stage.addChild(@containerWorld)
     @stage.addChild(@containerUI)
+  topDownRemoveAssets: ->
+    @stage.removeChild(@containerWorld)
+    @stage.removeChild(@containerUI)
 
   showdowndAddAssetst: ->
     @stage.addChild(@containerUI)
+  showdowndRemoveAssetst: ->
+    @stage.removeChild(@containerUI)
 
-  wrapUAddAssetsp: ->
+  wrapUpAddAssets: ->
     @stage.addChild(@containerUI)
+  wrapUpRemoveAssets: ->
+    @stage.removeChild(@containerUI)
 
   endAddAssets: ->
+    null
+  endRemoveAssets: ->
     null
