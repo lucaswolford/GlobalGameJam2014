@@ -11,6 +11,7 @@ class Game.UpdateManager
   city: null
   items: []
   npcs: []
+  arrow: null
   time: null
   worldCollisionRects: null
 
@@ -181,6 +182,7 @@ class Game.UpdateManager
     @city.switchBg(@moodQuestion.answer)
     @stage.addChild(@containerWorld)
     @stage.addChild(@containerUI)
+    @arrow.appearIn(15000)
   topDownRemoveAssets: ->
     @stage.removeChild(@containerWorld)
     @stage.removeChild(@containerUI)

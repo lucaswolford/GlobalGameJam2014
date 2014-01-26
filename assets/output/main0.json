@@ -519,6 +519,26 @@
         "w": 64,
         "h": 64
       }
+    },
+    "Arrow.png": {
+      "frame": {
+        "x": 2588,
+        "y": 873,
+        "w": 48,
+        "h": 48
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 48,
+        "h": 48
+      },
+      "sourceSize": {
+        "w": 48,
+        "h": 48
+      }
     }
   },
   "meta": {
