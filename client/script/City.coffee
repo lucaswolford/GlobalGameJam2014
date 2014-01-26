@@ -13,3 +13,12 @@ class Game.City
 
   update: ->
     null
+
+  switchBg: (mood) ->
+    switch mood
+      when 'happy'
+        @sprite.setTexture(Game.getTextureFromFrame("worldbg"))
+      when 'angry'
+        @sprite.setTexture(Game.getTextureFromFrame("worldbg_angry"))
+      when 'sad'
+        @sprite.setTexture(Game.getTextureFromFrame("worldbg_sad"))

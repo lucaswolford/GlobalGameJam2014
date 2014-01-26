@@ -178,6 +178,7 @@ class Game.UpdateManager
     @stage.removeChild(@containerUI)
 
   topDownAddAssets: ->
+    @city.switchBg(@moodQuestion.answer)
     @stage.addChild(@containerWorld)
     @stage.addChild(@containerUI)
   topDownRemoveAssets: ->
