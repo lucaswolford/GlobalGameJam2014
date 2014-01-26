@@ -19,7 +19,7 @@ class Game.Player
     @positionDesired = @sprite.position.clone()
 
   _prepDirection: (baseName,x,y,stage) ->
-    @sprite = new Game.SpriteAnimation(Game.getTexturesFromFrameBase(baseName), 0.5)
+    @sprite = new Game.SpriteAnimation(Game.getTexturesFromFrameBase(baseName), 0.2)
     @sprite.anchor.x = 0.5
     @sprite.anchor.y = 0.5
     @sprite.position.x = x
