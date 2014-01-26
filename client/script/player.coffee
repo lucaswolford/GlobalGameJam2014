@@ -12,7 +12,7 @@ class Game.Player
       right: @_prepDirection('playerRight',x,y,stage)
       up: @_prepDirection('playerUp',x,y,stage)
       down: @_prepDirection('playerDown',x,y,stage)
-
+    @setDir('down')
 
     @positionDesired = @sprite.position.clone()
 
