@@ -60,9 +60,6 @@ onAssetsLoaded = () ->
 #wrapup
   wrapupBg = new PIXI.Sprite(Game.getTextureFromFrame("interrogation"))
   containerInterro.addChild(wrapupBg)
-#end
-  endBg = new PIXI.Sprite(Game.getTextureFromFrame("end"))
-  containerEnd.addChild(endBg)
 
 #  new Game.DevRectDraw(containerWorld)
 

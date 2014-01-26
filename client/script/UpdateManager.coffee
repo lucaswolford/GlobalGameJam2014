@@ -174,8 +174,7 @@ class Game.UpdateManager
     @nextState() if (Game.Key.isDown(Game.Key.SPACE)) && @dialog.active == false
 
   updateEnd: (dt) ->
-    @nextState() if (Game.Key.isDown(Game.Key.SPACE))
-
+    @dialog.update(dt)
 
 # ASSET LOADING
   titleAddAssets: ->
@@ -263,6 +262,7 @@ class Game.UpdateManager
     @stage.removeChild(@containerUI)
 
   endAddAssets: ->
-    @stage.addChild(@containerEnd)
+    @stage.addChild(@containerUI)
+    @dialog.playScript('the', 'end')
   endRemoveAssets: ->
-    @stage.removeChild(@containerEnd)
+    @stage.removeChild(@containerUI)
