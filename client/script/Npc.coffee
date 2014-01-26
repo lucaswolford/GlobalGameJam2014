@@ -5,7 +5,7 @@ class Game.Npc
   active: false
 
   constructor: (x,y, stage, name) ->
-    @sprite = new PIXI.Sprite(Game.getTextureFromFrame("bunny"))
+    @sprite = new PIXI.Sprite(Game.getTextureFromFrame("playerDown1"))
     @sprite.anchor.x = 0.5
     @sprite.anchor.y = 0.5
     @sprite.position.x = x
