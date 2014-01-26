@@ -3,48 +3,36 @@ Game.dialogue =
     initial:
       [
         {speaking:"Detective", text: "Man what a mess"}
-        {speaking:"Detective", text: "3 people, 3 stories" }
-        {speaking:"Detective", text: "Each of them brings up" }
-        {speaking:"Detective", text: "inconsistencies with another." }
+        {speaking:"Detective", text: "Three people, and three different stories" }
+        {speaking:"Detective", text: "Each of them brings up inconsistencies with another." }
         {speaking:"Detective", text: "Maybe your story will clear up the confusion." }
-        {speaking:"Detective", text: "(or at least clear up some the inconsistencies between the other stories)" }
-        {speaking:"Detective", text: "But before we begin," }
-        {speaking:"Detective", text: "I would like to ask you a question:" }
+        {speaking:"Detective", text: "But before we begin, I would like to ask you a question:" }
         {speaking:"Detective", text: "How do you feel?" }
       ]
     sad:
       [
-        {speaking:"Detective", text: "Sad?" }
-        {speaking:"Detective", text: "Why do you feel that way?" }
+        {speaking:"Detective", text: "Sad? Why do you feel that way?" }
         {speaking:"You", text: "... *sigh*" }
-        {speaking:"Detective", text: "All right then." }
-        {speaking:"Detective", text: "Let's start at the beginning." }
+        {speaking:"Detective", text: "All right then. Let's start at the beginning." }
         {speaking:"Detective", text: "You mentioned to the police that you left your home shortly before the incident to go for a walk?" }
-        {speaking:"Detective", text: "Is that correct?" }
-        {speaking:"Detective", text: "Walk me through what happened from there. " }
+        {speaking:"Detective", text: "Is that correct? Walk me through what happened from there. " }
       ]
     angry:
       [
-        {speaking:"Detective", text: "Angry?" }
-        {speaking:"Detective", text: "Why do you feel that way?" }
+        {speaking:"Detective", text: "Angry? Why do you feel that way?" }
         {speaking:"You", text: "..." }
-        {speaking:"Detective", text: "All right then." }
-        {speaking:"Detective", text: "Let's start at the beginning." }
+        {speaking:"Detective", text: "All right then. Let's start at the beginning." }
         {speaking:"Detective", text: "You mentioned to the police that you left your home shortly before the incident to go for a walk?" }
-        {speaking:"Detective", text: "Is that correct?" }
-        {speaking:"Detective", text: "Walk me through what happened from there. " }
+        {speaking:"Detective", text: "Is that correct? Walk me through what happened from there. " }
       ]
     happy:
       [
-        {speaking:"Detective", text: "Relieved?" }
-        {speaking:"Detective", text: "Why do you feel that way?" }
+        {speaking:"Detective", text: "Relieved? Why do you feel that way?" }
         {speaking:"You",       text: "Well this isn't exactly how I thought my day would go," }
         {speaking:"You",       text: "but I feel so...good about how things turned out." }
-        {speaking:"Detective", text: "All right then." }
-        {speaking:"Detective", text: "Let's start at the beginning." }
+        {speaking:"Detective", text: "All right then. Let's start at the beginning." }
         {speaking:"Detective", text: "You mentioned to the police that you left your home shortly before the incident to go for a walk?" }
-        {speaking:"Detective", text: "Is that correct?" }
-        {speaking:"Detective", text: "Walk me through what happened from there." }
+        {speaking:"Detective", text: "Is that correct? Walk me through what happened from there. " }
       ]
 
     sadStab:

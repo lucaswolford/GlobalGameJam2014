@@ -2,7 +2,7 @@ class Game.DialogueBox
   text: null
   visiblePosition: 0
   index: 0
-  textSpeed: 10
+  textSpeed: 50
   active: true
 
   constructor: (stage) ->
