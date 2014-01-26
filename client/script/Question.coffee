@@ -40,7 +40,7 @@ class Game.Question
     if @active == true
       for answer in @getAnswers()
         if index == @selection
-          text += '*' 
+          text += '*'
         else
           text += ' '
         text += answer + '\n'

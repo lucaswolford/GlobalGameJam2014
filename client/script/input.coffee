@@ -8,6 +8,7 @@ Game.Key =
   UP: 38
   RIGHT: 39
   DOWN: 40
+  TOUCH: -1
 
   isDown: (keyCode) ->
     @_pressed[keyCode]
@@ -19,6 +20,12 @@ Game.Key =
     delete @_pressed[event.keyCode]
 
 class Game.InputManager
-  constructor: ->
+  constructor: (stage) ->
     window.addEventListener('keyup', ((event) -> Game.Key.onKeyup(event) ), false)
     window.addEventListener('keydown', ((event) -> Game.Key.onKeydown(event) ), false)
+
+    stage.interactive = true
+    stage.touchdown = stage.mousedown = ->
+      Game.Key.onKeydown({keyCode: Game.Key.TOUCH})
+    stage.touchend = stage.touchendoutside = stage.mouseup = ->
+      Game.Key.onKeyup({keyCode: Game.Key.TOUCH})
