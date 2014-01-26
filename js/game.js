@@ -347,12 +347,14 @@
     }
 
     Question.prototype.keydown = function(event) {
-      if (event.keyCode === Game.Key.UP) {
-        return this.moveUp();
-      } else if (event.keyCode === Game.Key.DOWN) {
-        return this.moveDown();
-      } else if (event.keyCode === Game.Key.ENTER) {
-        return this.finalize();
+      if (this.active) {
+        if (event.keyCode === Game.Key.UP) {
+          return this.moveUp();
+        } else if (event.keyCode === Game.Key.DOWN) {
+          return this.moveDown();
+        } else if (event.keyCode === Game.Key.ENTER) {
+          return this.finalize();
+        }
       }
     };
 
