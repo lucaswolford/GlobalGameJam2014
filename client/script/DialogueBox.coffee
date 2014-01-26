@@ -6,11 +6,18 @@ class Game.DialogueBox
   active: true
 
   constructor: (stage) ->
-    @text = new PIXI.Text("", {font: "bold italic 36px Arvo", fill: "#11FF11", align: "left", stroke: "#22FF00", strokeThickness: 1})
-    @text.position.x = 30
+#    @sprite = new PIXI.Sprite(Game.getTextureFromFrame("dialogueBox"))
+#    @sprite.position.x = 20
+#    @sprite.position.y = 20
+#    @sprite.alpha = 0.5
+#    stage.addChild(@sprite)
+
+    @text = new PIXI.Text("", {font: "bold italic 36px Arvo", fill: "#EEEEEE", align: "left", stroke: "#333333", strokeThickness: 5})
+    @text.position.x = 35
     @text.position.y = 10
     @text.anchor.x = @text.anchor.y = 0
     stage.addChild(@text)
+
     window.addEventListener('keydown', ( (event) => @keydown(event) ), false)
     @playScript('detective', 'initial')
 
