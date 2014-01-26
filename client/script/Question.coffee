@@ -16,12 +16,13 @@ class Game.Question
     @answers = Game.answers[@question]['answers']
 
   keydown: (event) ->
-    if event.keyCode == Game.Key.UP
-      @moveUp()
-    else if event.keyCode == Game.Key.DOWN
-      @moveDown()
-    else if event.keyCode == Game.Key.ENTER
-      @finalize()
+    if @active
+      if event.keyCode == Game.Key.UP
+        @moveUp()
+      else if event.keyCode == Game.Key.DOWN
+        @moveDown()
+      else if event.keyCode == Game.Key.ENTER
+        @finalize()
 
   update: (dt) ->
     @displayAnswers()
