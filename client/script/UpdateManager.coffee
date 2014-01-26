@@ -109,7 +109,6 @@ class Game.UpdateManager
 
 
   updateTopDown: (dt) ->
-    @nextState() if (Game.Key.isDown(Game.Key.CTRL))
     if @dialog.active
       @dialog.update(dt)
     else
@@ -127,6 +126,9 @@ class Game.UpdateManager
         npc.update(dt)
         if @ifPlayerCollision(npc) && (Game.Key.isDown(Game.Key.SPACE)) && npc.active == false
           npc.playerActivated(@dialog, @moodQuestion.answer)
+
+      if @worldCollisionRects.isOverDoor(@player.positionDesired.x, @player.positionDesired.y)
+        @nextState() if (Game.Key.isDown(Game.Key.SPACE) && @arrow.sprite.alpha == 1)
 
       # rectangle walls
       playerIsColliding = true if @worldCollisionRects.isPlayerColliding(@player)

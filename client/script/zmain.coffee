@@ -42,7 +42,7 @@ onAssetsLoaded = () ->
   updater.items.push new Game.Item(270,460, containerWorld, 'knife')
   updater.items.push new Game.Item(1260,470, containerWorld, 'purse')
   updater.dialog = new Game.DialogueBox(containerUI)
-  updater.arrow = new Game.Arrow(463,340, containerWorld)
+  updater.arrow = new Game.Arrow(463,580, containerWorld)
   updater.npcs.push new Game.Npc(960,430, containerWorld, 'hobo')
   updater.npcs.push new Game.Npc(680,430, containerWorld, 'bystander')
   updater.player = new Game.Player(463, 460, containerWorld)
