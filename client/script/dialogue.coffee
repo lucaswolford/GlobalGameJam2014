@@ -47,29 +47,65 @@ Game.dialogue =
         {speaking:"Detective", text: "Walk me through what happened from there." }
       ]
 
-    final1:
+    sadStab:
       [
-        {speaking:"Detective", text: "final dialogue 1 line 1" }
-        {speaking:"Detective", text: "final dialogue 1 line 2" }
+        {speaking:"Detective", text: "sadStab" }
       ]
-    final2:
+    sadBribe:
       [
-        {speaking:"Detective", text: "final dialogue 2 line 1" }
-        {speaking:"Detective", text: "final dialogue 2 line 2" }
+        {speaking:"Detective", text: "sadBribe" }
+      ]
+    sadReason:
+      [
+        {speaking:"Detective", text: "sadReason" }
+      ]
+    sadWalk:
+      [
+        {speaking:"Detective", text: "sadWalk" }
+      ]
+    happyStab:
+      [
+        {speaking:"Detective", text: "happyStab" }
+      ]
+    happyBribe:
+      [
+        {speaking:"Detective", text: "happyBribe" }
+      ]
+    happyReason:
+      [
+        {speaking:"Detective", text: "happyReason" }
+      ]
+    happyWalk:
+      [
+        {speaking:"Detective", text: "happyWalk" }
+      ]
+    angryStab:
+      [
+        {speaking:"Detective", text: "angryStab" }
+      ]
+    angryBribe:
+      [
+        {speaking:"Detective", text: "angryBribe" }
+      ]
+    angryReason:
+      [
+        {speaking:"Detective", text: "angryReason" }
+      ]
+    angryWalk:
+      [
+        {speaking:"Detective", text: "angryWalk" }
       ]
 
   showdown:
-    ending1:
+    ending:
       [
-        {speaking:"", text: "ending 1 line 1" }
-        {speaking:"", text: "ending 1 line 2" }
-        {speaking:"", text: "ending 1 line 3" }
-      ]
-    ending2:
-      [
-        {speaking:'', text: "ending 2 line 1"}
-        {speaking:'', text: "ending 2 line 2"}
-        {speaking:'', text: "ending 2 line 3"}
+        {speaking:"You", text: "I was about to finish my walk and go back inside when"}
+        {speaking:"You", text: "I heard a scream coming from the alley."}
+        {speaking:"You", text: "I ran through the alley as fast as I could to find the source of the scream."}
+        {speaking:"You", text: "As I rounded the corner I saw two girls arguing and fighting with each other."}
+        {speaking:"You", text: "I couldn't tell what it was about exactly,"}
+        {speaking:"You", text: "but I remember hearing a few words like 'purse' and 'money.'"}
+        {speaking:"Detective", text: "I see. So what did you do about it?"}
       ]
 
   hobo:
@@ -130,16 +166,17 @@ Game.answers =
     answers:
       [
         {value:"happy", displayText:"... relieved."}
-        {value:"sad", displayText:"... sad."}
+        {value:"sad",   displayText:"... sad."}
         {value:"angry", displayText:"... angry!"}
       ]
 
   action:
     question:
-      "What do you do?"
+      "I ..."
     answers:
       [
-        {value:"stab", displayText:"stab a bitch"}
-        {value:"giveCash", displayText:"give $$$"}
-        {value:"reason", displayText:"can't we all just get along?"}
+        {value:"reason", displayText:"tried to reason with them"}
+        {value:"walk",   displayText:"walked away"}
+        #{value:"stab",   displayText:"stabbed the bitch"}
+        #{value:"bribe",  displayText:"give them $$$"}
       ]

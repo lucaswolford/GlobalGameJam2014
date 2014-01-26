@@ -39,8 +39,8 @@ onAssetsLoaded = () ->
 
 #topdown
   updater.city = new Game.City(containerWorld)
-  updater.items.push new Game.Item(270,460, containerWorld)
-  updater.items.push new Game.Item(1260,470, containerWorld)
+  updater.items.push new Game.Item(270,460, containerWorld, 'knife')
+  updater.items.push new Game.Item(1260,470, containerWorld, 'purse')
   updater.player = new Game.Player(463, 460, containerWorld)
   updater.dialog = new Game.DialogueBox(containerUI)
   updater.npcs.push new Game.Npc(960,470, containerWorld, 'hobo')

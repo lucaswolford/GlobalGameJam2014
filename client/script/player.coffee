@@ -5,6 +5,8 @@ class Game.Player
   sprites: {}
   curDir: 'down'
   isMoving: false
+  hasPurse: false
+  hasKnife: false
 
   constructor: (x,y, stage) ->
     @sprites =
@@ -73,4 +75,3 @@ class Game.Player
     else
       @positionDesired.x = @sprite.position.x
       @positionDesired.y = @sprite.position.y
-

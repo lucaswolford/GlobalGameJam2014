@@ -3,6 +3,7 @@ class Game.Question
   question: null
   active: false
   answer: null
+  answers: null
 
   constructor: (stage, question) ->
     @text = new PIXI.Text("", {font: "bold italic 36px Arvo", fill: "#EEEEEE", align: "left", stroke: "#333333", strokeThickness: 5})
@@ -12,6 +13,7 @@ class Game.Question
     stage.addChild(@text)
     @question = question
     window.addEventListener('keydown', ( (event) => @keydown(event) ), false)
+    @answers = Game.answers[@question]['answers']
 
   keydown: (event) ->
     if event.keyCode == Game.Key.UP
@@ -52,4 +54,4 @@ class Game.Question
   getQuestion: ->
     Game.answers[@question]['question']
   getAnswers: ->
-    Game.answers[@question]['answers']
+    @answers

@@ -119,6 +119,8 @@ class Game.UpdateManager
         item.update(dt)
         if @ifPlayerCollision(item) && (Game.Key.isDown(Game.Key.SPACE))
           item.playerActivated()
+          @player.hasKnife = true if item.name == 'knife'
+          @player.hasPurse = true if item.name == 'purse'
 
       for npc in @npcs
         npc.update(dt)
@@ -185,8 +187,12 @@ class Game.UpdateManager
   showdowndAddAssetst: ->
     @stage.addChild(@containerShowdown)
     @stage.addChild(@containerUI)
-    @dialog.playScript('showdown', 'ending1')
+    @dialog.playScript('showdown', 'ending')
     @actionQuestion.active = true
+    if @player.hasKnife == true
+      @actionQuestion.answers.push {value:"stab",   displayText:"stabbed the bitch"}
+    if @player.hasPurse == true
+      @actionQuestion.answers.push {value:"bribe",  displayText:"give them $$$"}
   showdowndRemoveAssetst: ->
     @stage.removeChild(@containerShowdown)
     @stage.removeChild(@containerUI)
@@ -194,7 +200,39 @@ class Game.UpdateManager
   wrapUpAddAssets: ->
     @stage.addChild(@containerInterro)
     @stage.addChild(@containerUI)
-    @dialog.playScript('detective', 'final1')
+    mood = @moodQuestion.answer
+    action = @actionQuestion.answer
+    switch mood
+      when 'sad'
+        switch action
+          when 'stab'
+            @dialog.playScript('detective', 'sadStab')
+          when 'bribe'
+            @dialog.playScript('detective', 'sadBribe')
+          when 'reason'
+            @dialog.playScript('detective', 'sadReason')
+          when 'walk'
+            @dialog.playScript('detective', 'sadWalk')
+      when 'happy'
+        switch action
+          when 'stab'
+            @dialog.playScript('detective', 'happyStab')
+          when 'bribe'
+            @dialog.playScript('detective', 'happyBribe')
+          when 'reason'
+            @dialog.playScript('detective', 'happyReason')
+          when 'walk'
+            @dialog.playScript('detective', 'happyWalk')
+      when 'angry'
+        switch action
+          when 'stab'
+            @dialog.playScript('detective', 'angryStab')
+          when 'bribe'
+            @dialog.playScript('detective', 'angryBribe')
+          when 'reason'
+            @dialog.playScript('detective', 'angryReason')
+          when 'walk'
+            @dialog.playScript('detective', 'angryWalk')
   wrapUpRemoveAssets: ->
     @stage.removeChild(@containerInterro)
     @stage.removeChild(@containerUI)
