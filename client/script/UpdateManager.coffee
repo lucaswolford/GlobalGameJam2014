@@ -106,6 +106,7 @@ class Game.UpdateManager
     else
       @moodQuestion.update(dt)
 
+
   updateTopDown: (dt) ->
     @nextState() if (Game.Key.isDown(Game.Key.CTRL))
     if @dialog.active
@@ -170,6 +171,7 @@ class Game.UpdateManager
     @dialog.playScript('detective', 'initial')
     @moodQuestion.active = true
   interrogationRemoveAssets: ->
+    @dialog.playScript('detective', @moodQuestion.answer)
     @stage.removeChild(@containerInterro)
     @stage.removeChild(@containerUI)
 

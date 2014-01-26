@@ -2,89 +2,125 @@ Game.dialogue =
   detective:
     initial:
       [
-        "Man what a mess"
-        "3 people, 3 stories"
-        "Each of them brings up inconsistencies with another."
-        "Maybe your story will clear up the confusion."
-        "(or at least clear up some the inconsistencies between the other stories)"
-        "But before we begin,"
-        "I would like to ask you a question:"
-        "How do you feel?"
+        {speaking:"Detective", text: "Man what a mess"}
+        {speaking:"Detective", text: "3 people, 3 stories" }
+        {speaking:"Detective", text: "Each of them brings up" }
+        {speaking:"Detective", text: "inconsistencies with another." }
+        {speaking:"Detective", text: "Maybe your story will clear up the confusion." }
+        {speaking:"Detective", text: "(or at least clear up some the inconsistencies between the other stories)" }
+        {speaking:"Detective", text: "But before we begin," }
+        {speaking:"Detective", text: "I would like to ask you a question:" }
+        {speaking:"Detective", text: "How do you feel?" }
       ]
+    sad:
+      [
+        {speaking:"Detective", text: "Sad?" }
+        {speaking:"Detective", text: "Why do you feel that way?" }
+        {speaking:"You", text: "... *sigh*" }
+        {speaking:"Detective", text: "All right then." }
+        {speaking:"Detective", text: "Let's start at the beginning." }
+        {speaking:"Detective", text: "You mentioned to the police that you left your home shortly before the incident to go for a walk?" }
+        {speaking:"Detective", text: "Is that correct?" }
+        {speaking:"Detective", text: "Walk me through what happened from there. " }
+      ]
+    angry:
+      [
+        {speaking:"Detective", text: "Angry?" }
+        {speaking:"Detective", text: "Why do you feel that way?" }
+        {speaking:"You", text: "..." }
+        {speaking:"Detective", text: "All right then." }
+        {speaking:"Detective", text: "Let's start at the beginning." }
+        {speaking:"Detective", text: "You mentioned to the police that you left your home shortly before the incident to go for a walk?" }
+        {speaking:"Detective", text: "Is that correct?" }
+        {speaking:"Detective", text: "Walk me through what happened from there. " }
+      ]
+    happy:
+      [
+        {speaking:"Detective", text: "Relieved?" }
+        {speaking:"Detective", text: "Why do you feel that way?" }
+        {speaking:"You",       text: "Well this isn't exactly how I thought my day would go," }
+        {speaking:"You",       text: "but I feel so...good about how things turned out." }
+        {speaking:"Detective", text: "All right then." }
+        {speaking:"Detective", text: "Let's start at the beginning." }
+        {speaking:"Detective", text: "You mentioned to the police that you left your home shortly before the incident to go for a walk?" }
+        {speaking:"Detective", text: "Is that correct?" }
+        {speaking:"Detective", text: "Walk me through what happened from there." }
+      ]
+
     final1:
       [
-        "final dialogue 1 line 1"
-        "final dialogue 1 line 2"
+        {speaking:"Detective", text: "final dialogue 1 line 1" }
+        {speaking:"Detective", text: "final dialogue 1 line 2" }
       ]
     final2:
       [
-        "final dialogue 2 line 1"
-        "final dialogue 2 line 2"
+        {speaking:"Detective", text: "final dialogue 2 line 1" }
+        {speaking:"Detective", text: "final dialogue 2 line 2" }
       ]
 
   showdown:
     ending1:
       [
-        "ending 1 line 1"
-        "ending 1 line 2"
-        "ending 1 line 3"
+        {speaking:"", text: "ending 1 line 1" }
+        {speaking:"", text: "ending 1 line 2" }
+        {speaking:"", text: "ending 1 line 3" }
       ]
     ending2:
       [
-        "ending 2 line 1"
-        "ending 2 line 2"
-        "ending 2 line 3"
+        {speaking:'', text: "ending 2 line 1"}
+        {speaking:'', text: "ending 2 line 2"}
+        {speaking:'', text: "ending 2 line 3"}
       ]
 
   hobo:
     happy:
       [
-        "hobo relieved"
-        "second line"
+        {speaking:'Gretchen', text: "Do you have any spare change, mista?"}
+        {speaking:'You', text: "I wish I could help."}
       ]
     angry:
       [
-        "hobo angry"
-        "second line"
+        {speaking:'Gretchen', text: "OY! Can you help a poor woman out?"}
+        {speaking:'You', text: "I'm sorry I can't help you."}
       ]
     sad:
       [
-        "hobo sad"
-        "second line"
+        {speaking:'Gretchen', text: "Can you...help me, mista?"}
+        {speaking:'You', text: "Back off! I don't have any money."}
       ]
 
   victim:
     happy:
       [
-        "victim relieved"
-        "second line"
+        {speaking:'Vicky', text: "I'm a a little lost, would you mind giving me directions to Envy Labs?"}
+        {speaking:'You', text: "It's just up the street."}
+        {speaking:'Vicky', text: "Oh thank you! I would have never found it."}
       ]
     angry:
       [
-        "victim angry"
-        "second line"
+        {speaking:'Vicky', text: "Ugh, can you help me find my way out of here?"}
+        {speaking:'You', text: "Yeah, you look lost. Good luck with that"}
+        {speaking:'Vicky', text: "Jerk."}
       ]
     sad:
       [
-        "victim sad"
-        "second line"
+        {speaking:'Vicky', text: "I don't know where I am...can you...help me?"}
+        {speaking:'You', text: "Uhhh...no, I'm sorry I can't help you."}
+        {speaking:'Vicky', text: "Ugh, I'm never going to find Envy Labs."}
       ]
 
   bystander:
     happy:
       [
-        "bystander relieved"
-        "second line"
+        {speaking:'Drake', text: "Hey man, how are you doing?"}
       ]
     angry:
       [
-        "bystander angry"
-        "second line"
+        {speaking:'Drake', text: "What're you doing?"}
       ]
     sad:
       [
-        "bystander sad"
-        "second line"
+        {speaking:'Drake', text: "Hey man, what's wrong?"}
       ]
 
 Game.answers =
@@ -93,9 +129,9 @@ Game.answers =
       "I feel ..."
     answers:
       [
-        {value:"happy", displayText:"I feel relieved!"}
-        {value:"sad", displayText:"I feel sad!"}
-        {value:"angry", displayText:"I feel angry!"}
+        {value:"happy", displayText:"... relieved."}
+        {value:"sad", displayText:"... sad."}
+        {value:"angry", displayText:"... angry!"}
       ]
 
   action:
