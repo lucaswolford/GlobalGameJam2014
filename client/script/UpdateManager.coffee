@@ -37,8 +37,9 @@ class Game.UpdateManager
           npc.playerActivated(@dialog)
 
     # Scrolling
-    @containerWorld.position.x = Game.SCREEN_SIZE.Xhalf - (@player.sprite.position.x)
-    @containerWorld.position.y = Game.SCREEN_SIZE.Yhalf - (@player.sprite.position.y)
+    @containerWorld.position.x = Game.SCREEN_SIZE.Xhalf - Math.min(Math.max(@player.sprite.position.x, Game.SCREEN_SIZE.Xhalf), @city.width - Game.SCREEN_SIZE.Xhalf)
+
+    @containerWorld.position.y = Game.SCREEN_SIZE.Yhalf - Math.min(Math.max(@player.sprite.position.y, Game.SCREEN_SIZE.Yhalf), @city.height  - Game.SCREEN_SIZE.Yhalf)
 
   ifPlayerCollision: (object) ->
     distX = @player.sprite.position.x - object.sprite.position.x
