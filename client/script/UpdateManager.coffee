@@ -96,7 +96,7 @@ class Game.UpdateManager
     @nextState() if (Game.Key.isDown(Game.Key.SPACE))
 
   updateInterrogation: (dt) ->
-    if (Game.Key.isDown(Game.Key.SPACE)) &&
+    if (Game.Key.isDown(Game.Key.ENTER)) &&
         @dialog.active == false &&
         @moodQuestion.active == false
       @nextState()
@@ -175,7 +175,7 @@ class Game.UpdateManager
   showdowndAddAssetst: ->
     @stage.addChild(@containerShowdown)
     @stage.addChild(@containerUI)
-    @dialog.playScript('showdown', 'script')
+    @dialog.playScript('showdown', 'ending1')
   showdowndRemoveAssetst: ->
     @stage.removeChild(@containerShowdown)
     @stage.removeChild(@containerUI)
@@ -183,7 +183,7 @@ class Game.UpdateManager
   wrapUpAddAssets: ->
     @stage.addChild(@containerInterro)
     @stage.addChild(@containerUI)
-    @dialog.playScript('detective', 'final')
+    @dialog.playScript('detective', 'final1')
   wrapUpRemoveAssets: ->
     @stage.removeChild(@containerInterro)
     @stage.removeChild(@containerUI)

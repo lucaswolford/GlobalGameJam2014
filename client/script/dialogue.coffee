@@ -5,10 +5,15 @@ Game.dialogue =
         "Wow! Much dialogue. Such text."
         "init dialogue line 2"
       ]
-    final:
+    final1:
       [
-        "final dialogue line 1"
-        "final dialogue line 2"
+        "final dialogue 1 line 1"
+        "final dialogue 1 line 2"
+      ]
+    final2:
+      [
+        "final dialogue 2 line 1"
+        "final dialogue 2 line 2"
       ]
 
   showdown:

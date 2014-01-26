@@ -5,7 +5,7 @@ class Game.Question
   answer: null
 
   constructor: (stage, question) ->
-    @text = new PIXI.Text("", {font: "bold italic 36px Arvo", fill: "#110011", align: "left", stroke: "#221100", strokeThickness: 1})
+    @text = new PIXI.Text("", {font: "bold italic 36px Arvo", fill: "#11FF11", align: "left", stroke: "#22FF00", strokeThickness: 1})
     @text.position.x = 40
     @text.position.y = 10
     @text.anchor.x = @text.anchor.y = 0
@@ -25,7 +25,7 @@ class Game.Question
     @displayAnswers()
 
   finalize: ->
-    @text.setText('')
+    @text.setText("a")
     @answer = @selection
     @active = false
 
@@ -37,13 +37,14 @@ class Game.Question
   displayAnswers: ->
     text = ''
     index = 0
-    for answer in @getAnswers()
-      if index == @selection
-        text += '*' 
-      else
-        text += ' '
-      text += answer + '\n'
-      index++
+    if @active == true
+      for answer in @getAnswers()
+        if index == @selection
+          text += '*' 
+        else
+          text += ' '
+        text += answer + '\n'
+        index++
     @text.setText(text)
 
   getAnswers: ->
