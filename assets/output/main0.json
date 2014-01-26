@@ -140,10 +140,150 @@
         "h": 64
       }
     },
-    "bunny.png": {
+    "playerDown1.png": {
       "frame": {
         "x": 2160,
         "y": 1200,
+        "w": 26,
+        "h": 37
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 26,
+        "h": 37
+      },
+      "sourceSize": {
+        "w": 26,
+        "h": 37
+      }
+    },
+    "playerDown2.png": {
+      "frame": {
+        "x": 2160,
+        "y": 1237,
+        "w": 26,
+        "h": 37
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 26,
+        "h": 37
+      },
+      "sourceSize": {
+        "w": 26,
+        "h": 37
+      }
+    },
+    "playerLeft1.png": {
+      "frame": {
+        "x": 2160,
+        "y": 1274,
+        "w": 26,
+        "h": 37
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 26,
+        "h": 37
+      },
+      "sourceSize": {
+        "w": 26,
+        "h": 37
+      }
+    },
+    "playerLeft2.png": {
+      "frame": {
+        "x": 2160,
+        "y": 1311,
+        "w": 26,
+        "h": 37
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 26,
+        "h": 37
+      },
+      "sourceSize": {
+        "w": 26,
+        "h": 37
+      }
+    },
+    "playerRight1.png": {
+      "frame": {
+        "x": 2160,
+        "y": 1348,
+        "w": 26,
+        "h": 37
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 26,
+        "h": 37
+      },
+      "sourceSize": {
+        "w": 26,
+        "h": 37
+      }
+    },
+    "playerRight2.png": {
+      "frame": {
+        "x": 864,
+        "y": 800,
+        "w": 26,
+        "h": 37
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 26,
+        "h": 37
+      },
+      "sourceSize": {
+        "w": 26,
+        "h": 37
+      }
+    },
+    "playerUp1.png": {
+      "frame": {
+        "x": 890,
+        "y": 800,
+        "w": 26,
+        "h": 37
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 26,
+        "h": 37
+      },
+      "sourceSize": {
+        "w": 26,
+        "h": 37
+      }
+    },
+    "playerUp2.png": {
+      "frame": {
+        "x": 916,
+        "y": 800,
         "w": 26,
         "h": 37
       },
