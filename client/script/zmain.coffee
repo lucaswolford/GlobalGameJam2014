@@ -37,12 +37,12 @@ onAssetsLoaded = () ->
   containerInterro.addChild(interroBg)
 #topdown
   updater.city = new Game.City(containerWorld)
-  updater.items.push new Game.Item(400,400, containerWorld)
-  updater.items.push new Game.Item(400,500, containerWorld)
-  updater.player = new Game.Player(400, 150, containerWorld)
+  updater.items.push new Game.Item(270,460, containerWorld)
+  updater.items.push new Game.Item(1260,470, containerWorld)
+  updater.player = new Game.Player(463, 460, containerWorld)
   updater.dialog = new Game.DialogueBox(containerUI)
-  updater.npcs.push new Game.Npc(400,200, containerWorld, 'hobo', 'sad')
-  updater.npcs.push new Game.Npc(400,250, containerWorld, 'victim', 'angry')
+  updater.npcs.push new Game.Npc(960,470, containerWorld, 'hobo', 'sad')
+  updater.npcs.push new Game.Npc(1180,680, containerWorld, 'victim', 'angry')
 #showdown
   showdownBg = new PIXI.Sprite(Game.getTextureFromFrame("showdown"))
   containerShowdown.addChild(showdownBg)
