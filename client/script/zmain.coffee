@@ -53,6 +53,8 @@ onAssetsLoaded = () ->
   endBg = new PIXI.Sprite(Game.getTextureFromFrame("end"))
   containerEnd.addChild(endBg)
 
+  new Game.DevRectDraw(containerWorld)
+
   assetsLoaded = true
 
 loader = new PIXI.AssetLoader(['assets/main0.json'])
@@ -62,7 +64,6 @@ loader.load() #begin load
 animate = () ->
   requestAnimFrame( animate )
 
-#  stage.position.x = player.sprite.position.x if player?
   updater.updateGame() if assetsLoaded == true
 
   renderer.render(stage)
