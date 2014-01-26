@@ -1,6 +1,10 @@
 class Game.UpdateManager
   containerWorld: null
   containerUI: null
+  containerTitle: null
+  containerInterro: null
+  containerShowdown: null
+  containerEnd: null
   dialog: null
   player: null
   city: null
@@ -17,9 +21,23 @@ class Game.UpdateManager
   WRAPUP: 5
   END: 6
 
-  constructor: (containerWorld, containerUI)->
+  constructor: (stage,
+                containerWorld,
+                containerUI
+                containerTitle,
+                containerInterro,
+                containerShowdown,
+                containerEnd
+                )->
+    @stage = stage
     @containerWorld = containerWorld
     @containerUI = containerUI
+    @containerTitle = containerTitle
+    @containerInterro = containerInterro
+    @containerShowdown = containerShowdown
+    @containerEnd = containerEnd
+    @state = @TITLE
+    @switchState()
 
   dt: ->
     now = Date.now()
@@ -27,6 +45,20 @@ class Game.UpdateManager
     dt *= 0.001 #delta time in sec
     @time = now
     dt
+
+  switchState: ->
+    #remove all children
+    for child in @stage.children
+      @stage.removeChild(child)
+
+    switch @state
+      when @TITLE then @titleAddAssets()
+      when @INTERROGATION then @interrogationAddAssets()
+      when @TOPDOWN then @topDownAddAssets()
+      when @SHOWDOWN then @showdowndAddAssetst()
+      when @WRAPUP then @wrapUAddAssetsp()
+      when @END then @endAddAssets()
+
 
   updateGame: ->
     dt = @dt()
@@ -46,13 +78,14 @@ class Game.UpdateManager
 
   nextState: ->
     @state++
+    @switchState()
 
   updateTitle: (dt) ->
-    @nextState if (Game.Key.isDown(Game.Key.SPACE))
+    @nextState() if (Game.Key.isDown(Game.Key.SPACE))
 
   updateInterrogation: (dt) ->
     @dialog.update(dt)
-    @nextState if (Game.Key.isDown(Game.Key.SPACE))
+    @nextState() if (Game.Key.isDown(Game.Key.CTRL))
 
   updateTopDown: (dt) ->
     if @dialog.active
@@ -76,7 +109,6 @@ class Game.UpdateManager
     @containerWorld.position.y = Game.SCREEN_SIZE.Yhalf - Math.min(Math.max(@player.sprite.position.y,
       Game.SCREEN_SIZE.Yhalf), @city.height  - Game.SCREEN_SIZE.Yhalf)
 
-
   updateShowdown: (dt) ->
     @dialog.update(dt)
 
@@ -84,4 +116,26 @@ class Game.UpdateManager
     @dialog.update(dt)
 
   updateEnd: (dt) ->
+    null
+
+
+  # CONTAINER
+  titleAddAssets: ->
+    @stage.addChild(@containerTitle)
+
+  interrogationAddAssets: ->
+    @stage.addChild(@containerInterro)
+    @stage.addChild(@containerUI)
+
+  topDownAddAssets: ->
+    @stage.addChild(@containerWorld)
+    @stage.addChild(@containerUI)
+
+  showdowndAddAssetst: ->
+    @stage.addChild(@containerUI)
+
+  wrapUAddAssetsp: ->
+    @stage.addChild(@containerUI)
+
+  endAddAssets: ->
     null

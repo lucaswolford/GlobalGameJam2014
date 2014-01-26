@@ -1,8 +1,11 @@
 stage = new PIXI.Stage(0x000000)
+
 containerUI = new PIXI.DisplayObjectContainer()
 containerWorld = new PIXI.DisplayObjectContainer()
-stage.addChild(containerWorld)
-stage.addChild(containerUI)
+containerTitle = new PIXI.DisplayObjectContainer()
+containerInterro = new PIXI.DisplayObjectContainer()
+containerShowdown = new PIXI.DisplayObjectContainer()
+containerEnd = new PIXI.DisplayObjectContainer()
 
 Game.SCREEN_SIZE =
   X: 800
@@ -14,23 +17,41 @@ renderer = PIXI.autoDetectRenderer(Game.SCREEN_SIZE.X, Game.SCREEN_SIZE.Y, null)
 document.body.appendChild(renderer.view)
 
 input = new Game.InputManager
-updater = new Game.UpdateManager(containerWorld, containerUI)
+updater = new Game.UpdateManager(stage,
+                                 containerWorld,
+                                 containerUI,
+                                 containerTitle,
+                                 containerInterro,
+                                 containerShowdown,
+                                 containerEnd )
 
 #player = null
 assetsLoaded = false
 
 onAssetsLoaded = () ->
-
+#title
+  title = new PIXI.Sprite(Game.getTextureFromFrame("titleScreen"))
+  containerTitle.addChild(title)
+#interro
+  interroBg = new PIXI.Sprite(Game.getTextureFromFrame("interrogation"))
+  containerInterro.addChild(interroBg)
+#topdown
   updater.city = new Game.City(containerWorld)
-
   updater.items.push new Game.Item(400,400, containerWorld)
   updater.items.push new Game.Item(400,500, containerWorld)
-
   updater.player = new Game.Player(400, 150, containerWorld)
   updater.dialog = new Game.DialogueBox(containerUI)
-
   updater.npcs.push new Game.Npc(400,200, containerWorld, 'hobo', 'sad')
   updater.npcs.push new Game.Npc(400,250, containerWorld, 'victim', 'angry')
+#showdown
+  showdownBg = new PIXI.Sprite(Game.getTextureFromFrame("showdown"))
+  containerShowdown.addChild(showdownBg)
+#wrapup
+  wrapupBg = new PIXI.Sprite(Game.getTextureFromFrame("interrogation"))
+  containerInterro.addChild(wrapupBg)
+#end
+  endBg = new PIXI.Sprite(Game.getTextureFromFrame("end"))
+  containerEnd.addChild(endBg)
 
   assetsLoaded = true
 
