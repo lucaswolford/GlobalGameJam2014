@@ -196,6 +196,7 @@ class Game.UpdateManager
     @stage.removeChild(@containerUI)
 
   interrogation2AddAssets: ->
+    @prot.setTexture(Game.getTextureFromFrame("protg "+@moodQuestion.answer))
     @stage.addChild(@containerInterro2)
     @stage.addChild(@containerUI)
     @dialog.playScript('detective', @moodQuestion.answer)
