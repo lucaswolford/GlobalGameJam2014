@@ -42,7 +42,7 @@ animate = () ->
   requestAnimFrame( animate )
 
 #  stage.position.x = player.sprite.position.x if player?
-  updater.updateAll() if assetsLoaded == true
+  updater.updateGame() if assetsLoaded == true
 
   renderer.render(stage)
 
