@@ -1,10 +1,21 @@
 Game.dialogue =
   detective:
+    initial:
+      [
+        "Wow! Much dialogue. Such text."
+        "init dialogue line 2"
+      ]
+    final:
+      [
+        "final dialogue line 1"
+        "final dialogue line 2"
+      ]
+  showdown:
     script:
       [
-        "Hello! This is dog."
-        "What you say? What you say?"
-        "We get signal! We get signal!"
+        "Showdown line 1"
+        "Showdown line 2"
+        "Showdown line 3"
       ]
 
   hobo:

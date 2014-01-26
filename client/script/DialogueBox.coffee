@@ -12,7 +12,7 @@ class Game.DialogueBox
     @text.anchor.x = @text.anchor.y = 0
     stage.addChild(@text)
     window.addEventListener('keydown', ( (event) => @keydown(event) ), false)
-    @playScript('detective', 'script')
+    @playScript('detective', 'initial')
 
   update: (dt) ->
     @text.setText(@getGameDialogue()[0..@visiblePosition])
@@ -20,10 +20,10 @@ class Game.DialogueBox
 
   keydown: (event) ->
     if event.keyCode == 32
-      if not @isAtEndOfLine()
-        @displayAll()
-      else
+      if @isAtEndOfLine()
         @nextLine()
+      else
+        @displayAll()
 
   displayAll: ->
     @visiblePosition = @getGameDialogue().length

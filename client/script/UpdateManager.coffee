@@ -72,7 +72,7 @@ class Game.UpdateManager
       when @TITLE then @updateTitle(dt)
       when @INTERROGATION then @updateInterrogation(dt)
       when @TOPDOWN then @updateTopDown(dt)
-      when @SHOWDOWN then @updateShowdowndt(dt)
+      when @SHOWDOWN then @updateShowdown(dt)
       when @WRAPUP then @updateWrapUp(dt)
       when @END then @updateEnd(dt)
 
@@ -91,9 +91,10 @@ class Game.UpdateManager
 
   updateInterrogation: (dt) ->
     @dialog.update(dt)
-    @nextState() if (Game.Key.isDown(Game.Key.CTRL))
+    @nextState() if (Game.Key.isDown(Game.Key.SPACE)) && @dialog.active == false
 
   updateTopDown: (dt) ->
+    @nextState() if (Game.Key.isDown(Game.Key.CTRL))
     if @dialog.active
       @dialog.update(dt)
     else
@@ -117,15 +118,17 @@ class Game.UpdateManager
 
   updateShowdown: (dt) ->
     @dialog.update(dt)
+    @nextState() if (Game.Key.isDown(Game.Key.SPACE)) && @dialog.active == false
 
   updateWrapUp: (dt) ->
     @dialog.update(dt)
+    @nextState() if (Game.Key.isDown(Game.Key.SPACE)) && @dialog.active == false
 
   updateEnd: (dt) ->
-    null
+    @nextState() if (Game.Key.isDown(Game.Key.SPACE))
 
 
-  # CONTAINER
+# ASSET LOADING
   titleAddAssets: ->
     @stage.addChild(@containerTitle)
   titleRemoveAssets: ->
@@ -134,6 +137,7 @@ class Game.UpdateManager
   interrogationAddAssets: ->
     @stage.addChild(@containerInterro)
     @stage.addChild(@containerUI)
+    @dialog.playScript('detective', 'initial')
   interrogationRemoveAssets: ->
     @stage.removeChild(@containerInterro)
     @stage.removeChild(@containerUI)
@@ -146,16 +150,22 @@ class Game.UpdateManager
     @stage.removeChild(@containerUI)
 
   showdowndAddAssetst: ->
+    @stage.addChild(@containerShowdown)
     @stage.addChild(@containerUI)
+    @dialog.playScript('showdown', 'script')
   showdowndRemoveAssetst: ->
+    @stage.removeChild(@containerShowdown)
     @stage.removeChild(@containerUI)
 
   wrapUpAddAssets: ->
+    @stage.addChild(@containerInterro)
     @stage.addChild(@containerUI)
+    @dialog.playScript('detective', 'final')
   wrapUpRemoveAssets: ->
+    @stage.removeChild(@containerInterro)
     @stage.removeChild(@containerUI)
 
   endAddAssets: ->
-    null
+    @stage.addChild(@containerEnd)
   endRemoveAssets: ->
-    null
+    @stage.removeChild(@containerEnd)
