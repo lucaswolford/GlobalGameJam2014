@@ -93,7 +93,7 @@ class Game.UpdateManager
     @switchState()
 
   updateTitle: (dt) ->
-    @nextState() if (Game.Key.isDown(Game.Key.SPACE))
+    @nextState() if (Game.Key.isDown(Game.Key.SPACE) || Game.Key.isDown(Game.Key.TOUCH))
 
   updateInterrogation: (dt) ->
     if (Game.Key.isDown(Game.Key.ENTER)) &&

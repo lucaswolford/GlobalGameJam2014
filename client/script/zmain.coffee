@@ -16,7 +16,7 @@ Game.SCREEN_SIZE.Yhalf = Game.SCREEN_SIZE.Y / 2
 renderer = PIXI.autoDetectRenderer(Game.SCREEN_SIZE.X, Game.SCREEN_SIZE.Y, null)
 document.body.appendChild(renderer.view)
 
-input = new Game.InputManager
+input = new Game.InputManager(stage)
 updater = new Game.UpdateManager(stage,
                                  containerWorld,
                                  containerUI,
