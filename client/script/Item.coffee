@@ -3,7 +3,7 @@ class Game.Item
   name: null
 
   constructor: (x,y, stage, name) ->
-    @sprite = new PIXI.Sprite(Game.getTextureFromFrame("item"))
+    @sprite = new PIXI.Sprite(Game.getTextureFromFrame("Item_"+name))
     @sprite.anchor.x = 0.5
     @sprite.anchor.y = 0.5
     @sprite.position.x = x

@@ -41,10 +41,10 @@ onAssetsLoaded = () ->
   updater.city = new Game.City(containerWorld)
   updater.items.push new Game.Item(270,460, containerWorld, 'knife')
   updater.items.push new Game.Item(1260,470, containerWorld, 'purse')
-  updater.player = new Game.Player(463, 460, containerWorld)
   updater.dialog = new Game.DialogueBox(containerUI)
   updater.npcs.push new Game.Npc(960,430, containerWorld, 'hobo')
   updater.npcs.push new Game.Npc(680,430, containerWorld, 'bystander')
+  updater.player = new Game.Player(463, 460, containerWorld)
   updater.npcs.push new Game.Npc(1180,680, containerWorld, 'victim')
 #showdown
   showdownBg = new PIXI.Sprite(Game.getTextureFromFrame("showdown"))

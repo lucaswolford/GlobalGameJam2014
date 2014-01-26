@@ -160,7 +160,7 @@
         "h": 200
       }
     },
-    "CharacterKnife.png": {
+    "Item_knife.png": {
       "frame": {
         "x": 2200,
         "y": 800,
@@ -180,7 +180,7 @@
         "h": 73
       }
     },
-    "CharacterPurse.png": {
+    "Item_purse.png": {
       "frame": {
         "x": 2254,
         "y": 800,
