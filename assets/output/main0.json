@@ -160,9 +160,29 @@
         "h": 200
       }
     },
-    "Item_knife.png": {
+    "Arrow.png": {
       "frame": {
         "x": 2200,
+        "y": 800,
+        "w": 54,
+        "h": 73
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 54,
+        "h": 73
+      },
+      "sourceSize": {
+        "w": 54,
+        "h": 73
+      }
+    },
+    "Item_knife.png": {
+      "frame": {
+        "x": 2254,
         "y": 800,
         "w": 54,
         "h": 73
@@ -182,7 +202,7 @@
     },
     "Item_purse.png": {
       "frame": {
-        "x": 2254,
+        "x": 2308,
         "y": 800,
         "w": 54,
         "h": 73
@@ -202,7 +222,7 @@
     },
     "NPC_bystander.png": {
       "frame": {
-        "x": 2308,
+        "x": 2362,
         "y": 800,
         "w": 54,
         "h": 73
@@ -222,7 +242,7 @@
     },
     "NPC_hobo.png": {
       "frame": {
-        "x": 2362,
+        "x": 2416,
         "y": 800,
         "w": 54,
         "h": 73
@@ -242,7 +262,7 @@
     },
     "NPC_victim.png": {
       "frame": {
-        "x": 2416,
+        "x": 2470,
         "y": 800,
         "w": 54,
         "h": 73
@@ -262,7 +282,7 @@
     },
     "playerDown1.png": {
       "frame": {
-        "x": 2470,
+        "x": 2524,
         "y": 800,
         "w": 54,
         "h": 73
@@ -282,7 +302,7 @@
     },
     "playerDown2.png": {
       "frame": {
-        "x": 2524,
+        "x": 2578,
         "y": 800,
         "w": 54,
         "h": 73
@@ -302,7 +322,7 @@
     },
     "playerDown3.png": {
       "frame": {
-        "x": 2578,
+        "x": 2632,
         "y": 800,
         "w": 54,
         "h": 73
@@ -322,7 +342,7 @@
     },
     "playerLeft1.png": {
       "frame": {
-        "x": 2632,
+        "x": 2686,
         "y": 800,
         "w": 54,
         "h": 73
@@ -342,7 +362,7 @@
     },
     "playerLeft2.png": {
       "frame": {
-        "x": 2686,
+        "x": 2740,
         "y": 800,
         "w": 54,
         "h": 73
@@ -362,26 +382,6 @@
     },
     "playerLeft3.png": {
       "frame": {
-        "x": 2740,
-        "y": 800,
-        "w": 54,
-        "h": 73
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 54,
-        "h": 73
-      },
-      "sourceSize": {
-        "w": 54,
-        "h": 73
-      }
-    },
-    "playerRight1.png": {
-      "frame": {
         "x": 2200,
         "y": 873,
         "w": 54,
@@ -400,7 +400,7 @@
         "h": 73
       }
     },
-    "playerRight2.png": {
+    "playerRight1.png": {
       "frame": {
         "x": 2254,
         "y": 873,
@@ -420,7 +420,7 @@
         "h": 73
       }
     },
-    "playerRight3.png": {
+    "playerRight2.png": {
       "frame": {
         "x": 2308,
         "y": 873,
@@ -440,7 +440,7 @@
         "h": 73
       }
     },
-    "playerUp1.png": {
+    "playerRight3.png": {
       "frame": {
         "x": 2362,
         "y": 873,
@@ -460,7 +460,7 @@
         "h": 73
       }
     },
-    "playerUp2.png": {
+    "playerUp1.png": {
       "frame": {
         "x": 2416,
         "y": 873,
@@ -480,7 +480,7 @@
         "h": 73
       }
     },
-    "playerUp3.png": {
+    "playerUp2.png": {
       "frame": {
         "x": 2470,
         "y": 873,
@@ -500,44 +500,44 @@
         "h": 73
       }
     },
-    "item.png": {
+    "playerUp3.png": {
       "frame": {
         "x": 2524,
         "y": 873,
-        "w": 64,
-        "h": 64
+        "w": 54,
+        "h": 73
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 64,
-        "h": 64
+        "w": 54,
+        "h": 73
       },
       "sourceSize": {
-        "w": 64,
-        "h": 64
+        "w": 54,
+        "h": 73
       }
     },
-    "Arrow.png": {
+    "item.png": {
       "frame": {
-        "x": 2588,
+        "x": 2578,
         "y": 873,
-        "w": 48,
-        "h": 48
+        "w": 64,
+        "h": 64
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 48,
-        "h": 48
+        "w": 64,
+        "h": 64
       },
       "sourceSize": {
-        "w": 48,
-        "h": 48
+        "w": 64,
+        "h": 64
       }
     }
   },
