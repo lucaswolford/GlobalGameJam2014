@@ -36,11 +36,15 @@ onAssetsLoaded = () ->
   containerTitle.addChild(title)
 #interro
   interroBg = new PIXI.Sprite(Game.getTextureFromFrame("interrogation"))
+  detective = new Game.SpriteAnimation(Game.getTexturesFromFrameBase("Detective Pose "), 3)
+  updater.detective = detective
   containerInterro.addChild(interroBg)
+  containerInterro.addChild(detective)
   updater.moodQuestion = new Game.Question(containerUI, 'mood')
 
 #interro2
   containerInterro2.addChild(interroBg)
+  containerInterro2.addChild(detective)
 
 #topdown
   updater.city = new Game.City(containerWorld)
@@ -60,6 +64,9 @@ onAssetsLoaded = () ->
 #wrapup
   wrapupBg = new PIXI.Sprite(Game.getTextureFromFrame("interrogation"))
   containerInterro.addChild(wrapupBg)
+#end
+  endBg = new PIXI.Sprite(Game.getTextureFromFrame("end"))
+  containerEnd.addChild(endBg)
 
 #  new Game.DevRectDraw(containerWorld)
 

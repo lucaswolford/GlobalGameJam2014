@@ -9,6 +9,7 @@ class Game.UpdateManager
 
   dialog: null
   player: null
+  detective: null
   city: null
   items: []
   npcs: []
@@ -110,6 +111,8 @@ class Game.UpdateManager
         @moodQuestion.active == false
       @nextState()
 
+    @detective.update(dt)
+
     if @dialog.active
       @dialog.update(dt)
     else
@@ -117,6 +120,7 @@ class Game.UpdateManager
 
   updateInterrogation2: (dt) ->
     if @dialog.active
+      @detective.update(dt)
       @dialog.update(dt)
     if (Game.Key.isDown(Game.Key.SPACE) && @dialog.active == false)
       @nextState()
@@ -183,12 +187,12 @@ class Game.UpdateManager
     @stage.removeChild(@containerTitle)
 
   interrogationAddAssets: ->
-    @stage.addChild(@containerInterro)
+    @stage.addChild(@containerInterro2)
     @stage.addChild(@containerUI)
     @dialog.playScript('detective', 'initial')
     @moodQuestion.active = true
   interrogationRemoveAssets: ->
-    @stage.removeChild(@containerInterro)
+    @stage.removeChild(@containerInterro2)
     @stage.removeChild(@containerUI)
 
   interrogation2AddAssets: ->
