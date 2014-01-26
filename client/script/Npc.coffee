@@ -1,5 +1,5 @@
 class Game.Npc
-  size: 10
+  size: 20
   name: null
   mood: null
   active: false
