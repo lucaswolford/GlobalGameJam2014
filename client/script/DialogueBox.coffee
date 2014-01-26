@@ -22,7 +22,7 @@ class Game.DialogueBox
     @playScript('detective', 'initial')
 
   update: (dt) ->
-    text = @getGameDialogueSpeaker() + ": "
+    text = @getGameDialogueSpeaker() + ": \n"
     text += @getGameDialogue()[0..@visiblePosition]
     @text.setText(text)
     @visiblePosition += @textSpeed * dt

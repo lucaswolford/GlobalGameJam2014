@@ -75,52 +75,52 @@ Game.dialogue =
   hobo:
     happy:
       [
-        {speaking:'hobo', text: "hobo relieved"}
-        {speaking:'hobo', text: "second line"}
+        {speaking:'Gretchen', text: "Do you have any spare change, mista?"}
+        {speaking:'You', text: "I wish I could help."}
       ]
     angry:
       [
-        {speaking:'hobo', text: "hobo angry"}
-        {speaking:'hobo', text: "second line"}
+        {speaking:'Gretchen', text: "OY! Can you help a poor woman out?"}
+        {speaking:'You', text: "I'm sorry I can't help you."}
       ]
     sad:
       [
-        {speaking:'hobo', text: "hobo sad"}
-        {speaking:'hobo', text: "second line"}
+        {speaking:'Gretchen', text: "Can you...help me, mista?"}
+        {speaking:'You', text: "Back off! I don't have any money."}
       ]
 
   victim:
     happy:
       [
-        {speaking:'victim', text: "victim relieved"}
-        {speaking:'victim', text: "second line"}
+        {speaking:'Vicky', text: "I'm a a little lost, would you mind giving me directions to Envy Labs?"}
+        {speaking:'You', text: "It's just up the street."}
+        {speaking:'Vicky', text: "Oh thank you! I would have never found it."}
       ]
     angry:
       [
-        {speaking:'victim', text: "victim angry"}
-        {speaking:'victim', text: "second line"}
+        {speaking:'Vicky', text: "Ugh, can you help me find my way out of here?"}
+        {speaking:'You', text: "Yeah, you look lost. Good luck with that"}
+        {speaking:'Vicky', text: "Jerk."}
       ]
     sad:
       [
-        {speaking:'victim', text: "victim sad"}
-        {speaking:'victim', text: "second line"}
+        {speaking:'Vicky', text: "I don't know where I am...can you...help me?"}
+        {speaking:'You', text: "Uhhh...no, I'm sorry I can't help you."}
+        {speaking:'Vicky', text: "Ugh, I'm never going to find Envy Labs."}
       ]
 
   bystander:
     happy:
       [
-        {speaking:'bystander', text: "bystander relieved"}
-        {speaking:'bystander', text: "second line"}
+        {speaking:'Drake', text: "Hey man, how are you doing?"}
       ]
     angry:
       [
-        {speaking:'bystander', text: "bystander angry"}
-        {speaking:'bystander', text: "second line"}
+        {speaking:'Drake', text: "What're you doing?"}
       ]
     sad:
       [
-        {speaking:'bystander', text: "bystander sad"}
-        {speaking:'bystander', text: "second line"}
+        {speaking:'Drake', text: "Hey man, what's wrong?"}
       ]
 
 Game.answers =
