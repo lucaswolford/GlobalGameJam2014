@@ -17,5 +17,8 @@ class Game.SpriteAnimation extends PIXI.Sprite
     @timeUntilNextFrame -= dt
     if(@timeUntilNextFrame <= 0)
       @timeUntilNextFrame += @timePerFrame # to not re-wait the amount of extra time that has potentially passed
-      @frameCur = (@frameCur + 1) % @textures.length
-      @setTexture(@textures[@frameCur])
+      @setFrame((@frameCur + 1) % @textures.length)
+
+  setFrame: (index) ->
+    @frameCur = index
+    @setTexture(@textures[@frameCur])

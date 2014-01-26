@@ -19,7 +19,7 @@ class Game.Player
     @positionDesired = @sprite.position.clone()
 
   _prepDirection: (baseName,x,y,stage) ->
-    @sprite = new Game.SpriteAnimation(Game.getTexturesFromFrameBase(baseName), 0.2)
+    @sprite = new Game.SpriteAnimation(Game.getTexturesFromFrameBase(baseName), 0.1)
     @sprite.anchor.x = 0.5
     @sprite.anchor.y = 0.5
     @sprite.position.x = x
@@ -45,6 +45,11 @@ class Game.Player
       _.each(_.keys(@sprites), ((dir) =>
         @sprites[dir].update(dt)
       ))
+    else
+      _.each(_.keys(@sprites), ((dir) =>
+        @sprites[dir].setFrame(0)
+      ))
+
 
   moveUp: (dt) ->
     @setDir('up')
