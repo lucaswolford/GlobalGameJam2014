@@ -122,7 +122,7 @@ class Game.UpdateManager
       for npc in @npcs
         npc.update(dt)
         if @ifPlayerCollision(npc) && (Game.Key.isDown(Game.Key.SPACE)) && npc.active == false
-          npc.playerActivated(@dialog)
+          npc.playerActivated(@dialog, @moodQuestion.answer)
 
       # rectangle walls
       playerIsColliding = true if @worldCollisionRects.isPlayerColliding(@player)

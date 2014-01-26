@@ -26,7 +26,7 @@ class Game.Question
 
   finalize: ->
     @text.setText('')
-    @answer = @selection
+    @answer = @getAnswers()[ @selection ].value
     @active = false
 
   moveUp: ->
@@ -38,14 +38,18 @@ class Game.Question
     text = ''
     index = 0
     if @active == true
+      text += @getQuestion() + '\n'
       for answer in @getAnswers()
         if index == @selection
-          text += '*'
+          text += '>'
         else
-          text += ' '
-        text += answer + '\n'
+          text += '  '
+        text += answer.displayText + '\n'
         index++
     @text.setText(text)
 
+
+  getQuestion: ->
+    Game.answers[@question]['question']
   getAnswers: ->
-    Game.answers[@question]
+    Game.answers[@question]['answers']

@@ -31,7 +31,7 @@ Game.dialogue =
       ]
 
   hobo:
-    relieved:
+    happy:
       [
         "hobo relieved"
         "second line"
@@ -46,14 +46,9 @@ Game.dialogue =
         "hobo sad"
         "second line"
       ]
-    responsible:
-      [
-        "hobo responsible"
-        "second line"
-      ]
 
   victim:
-    relieved:
+    happy:
       [
         "victim relieved"
         "second line"
@@ -68,14 +63,9 @@ Game.dialogue =
         "victim sad"
         "second line"
       ]
-    responsible:
-      [
-        "victim responsible"
-        "second line"
-      ]
 
   bystander:
-    relieved:
+    happy:
       [
         "bystander relieved"
         "second line"
@@ -90,23 +80,24 @@ Game.dialogue =
         "bystander sad"
         "second line"
       ]
-    responsible:
-      [
-        "bystander responsible"
-        "second line"
-      ]
 
 Game.answers =
   mood:
-    [
-      "happy"
-      "sad"
-      "angry"
-    ]
+    question:
+      "How were you feeling?"
+    answers:
+      [
+        {value:"happy", displayText:"I feel happy!"}
+        {value:"sad", displayText:"I feel sad!"}
+        {value:"angry", displayText:"I feel angry!"}
+      ]
 
   action:
-    [
-      "stab a bitch"
-      "give $$$"
-      "can't we all just get along?"
-    ]
+    question:
+      "What do you do?"
+    answers:
+      [
+        {value:"stab", displayText:"stab a bitch"}
+        {value:"giveCash", displayText:"give $$$"}
+        {value:"reason", displayText:"can't we all just get along?"}
+      ]
