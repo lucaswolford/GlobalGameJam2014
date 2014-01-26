@@ -200,6 +200,12 @@ Game.dialogue =
         {speaking:'Drake', text: "Hey man, what's wrong?"}
       ]
 
+  the:
+    end:
+      [
+        {speaking: 'Ryan, James, Heleen, Robin, and Lucas', text: '\n\nThe End. \n\n\nThank you for playing.'}
+      ]
+
 Game.answers =
   mood:
     question:
