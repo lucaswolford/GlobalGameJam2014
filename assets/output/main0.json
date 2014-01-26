@@ -120,9 +120,69 @@
         "h": 200
       }
     },
-    "item.png": {
+    "NPC_bystander.png": {
       "frame": {
         "x": 800,
+        "y": 800,
+        "w": 54,
+        "h": 73
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 54,
+        "h": 73
+      },
+      "sourceSize": {
+        "w": 54,
+        "h": 73
+      }
+    },
+    "NPC_hobo.png": {
+      "frame": {
+        "x": 854,
+        "y": 800,
+        "w": 54,
+        "h": 73
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 54,
+        "h": 73
+      },
+      "sourceSize": {
+        "w": 54,
+        "h": 73
+      }
+    },
+    "NPC_victim.png": {
+      "frame": {
+        "x": 908,
+        "y": 800,
+        "w": 54,
+        "h": 73
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 54,
+        "h": 73
+      },
+      "sourceSize": {
+        "w": 54,
+        "h": 73
+      }
+    },
+    "item.png": {
+      "frame": {
+        "x": 962,
         "y": 800,
         "w": 64,
         "h": 64
@@ -242,7 +302,7 @@
     },
     "playerRight2.png": {
       "frame": {
-        "x": 864,
+        "x": 1026,
         "y": 800,
         "w": 26,
         "h": 37
@@ -262,7 +322,7 @@
     },
     "playerUp1.png": {
       "frame": {
-        "x": 890,
+        "x": 1052,
         "y": 800,
         "w": 26,
         "h": 37
@@ -282,7 +342,7 @@
     },
     "playerUp2.png": {
       "frame": {
-        "x": 916,
+        "x": 1078,
         "y": 800,
         "w": 26,
         "h": 37
