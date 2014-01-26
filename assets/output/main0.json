@@ -20,10 +20,90 @@
         "h": 1000
       }
     },
-    "item.png": {
+    "end.png": {
+      "frame": {
+        "x": 1200,
+        "y": 0,
+        "w": 800,
+        "h": 600
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 800,
+        "h": 600
+      },
+      "sourceSize": {
+        "w": 800,
+        "h": 600
+      }
+    },
+    "interrogation.png": {
       "frame": {
         "x": 0,
         "y": 1000,
+        "w": 800,
+        "h": 600
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 800,
+        "h": 600
+      },
+      "sourceSize": {
+        "w": 800,
+        "h": 600
+      }
+    },
+    "showdown.png": {
+      "frame": {
+        "x": 800,
+        "y": 1000,
+        "w": 800,
+        "h": 600
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 800,
+        "h": 600
+      },
+      "sourceSize": {
+        "w": 800,
+        "h": 600
+      }
+    },
+    "titleScreen.png": {
+      "frame": {
+        "x": 2000,
+        "y": 0,
+        "w": 800,
+        "h": 600
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 800,
+        "h": 600
+      },
+      "sourceSize": {
+        "w": 800,
+        "h": 600
+      }
+    },
+    "item.png": {
+      "frame": {
+        "x": 2000,
+        "y": 600,
         "w": 64,
         "h": 64
       },
@@ -42,8 +122,8 @@
     },
     "bunny.png": {
       "frame": {
-        "x": 64,
-        "y": 1000,
+        "x": 2064,
+        "y": 600,
         "w": 26,
         "h": 37
       },
@@ -67,8 +147,8 @@
     "image": "main0.png",
     "format": "RGBA8888",
     "size": {
-      "w": 1200,
-      "h": 1064
+      "w": 2800,
+      "h": 1600
     },
     "scale": 1
   }
