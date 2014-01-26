@@ -2,8 +2,14 @@ Game.dialogue =
   detective:
     initial:
       [
-        "Wow! Much dialogue. Such text."
-        "init dialogue line 2"
+        "Man what a mess"
+        "3 people, 3 stories"
+        "Each of them brings up inconsistencies with another."
+        "Maybe your story will clear up the confusion."
+        "(or at least clear up some the inconsistencies between the other stories)"
+        "But before we begin,"
+        "I would like to ask you a question:"
+        "How do you feel?"
       ]
     final1:
       [
@@ -84,10 +90,10 @@ Game.dialogue =
 Game.answers =
   mood:
     question:
-      "How were you feeling?"
+      "I feel ..."
     answers:
       [
-        {value:"happy", displayText:"I feel happy!"}
+        {value:"happy", displayText:"I feel relieved!"}
         {value:"sad", displayText:"I feel sad!"}
         {value:"angry", displayText:"I feel angry!"}
       ]
