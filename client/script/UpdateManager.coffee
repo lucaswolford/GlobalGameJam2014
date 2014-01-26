@@ -11,6 +11,7 @@ class Game.UpdateManager
   items: []
   npcs: []
   time: null
+  worldCollisionRects: null
 
   state: null
 
@@ -29,6 +30,7 @@ class Game.UpdateManager
                 containerShowdown,
                 containerEnd
                 )->
+    @worldCollisionRects = new Game.WorldCollisionRects()
     @stage = stage
     @containerWorld = containerWorld
     @containerUI = containerUI
@@ -109,6 +111,8 @@ class Game.UpdateManager
         npc.update(dt)
         if @ifPlayerCollision(npc) && (Game.Key.isDown(Game.Key.SPACE)) && npc.active == false
           npc.playerActivated(@dialog)
+
+      @player.updateCouldMove !@worldCollisionRects.isPlayerColliding(@player)
 
     # Scrolling
     @containerWorld.position.x = Game.SCREEN_SIZE.Xhalf - Math.min(Math.max(@player.sprite.position.x,

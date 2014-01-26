@@ -1,6 +1,8 @@
 class Game.Player
   speed: 300
   size: 10
+  positionDesired: null
+
   constructor: (x,y, stage) ->
     @sprite = new PIXI.Sprite(Game.getTextureFromFrame("bunny"))
     @sprite.anchor.x = 0.5
@@ -8,6 +10,7 @@ class Game.Player
     @sprite.position.x = x
     @sprite.position.y = y
     stage.addChild(@sprite)
+    @positionDesired = @sprite.position.clone()
 
   update: (dt) ->
     @moveUp(dt) if (Game.Key.isDown(Game.Key.UP))
@@ -16,13 +19,22 @@ class Game.Player
     @moveRight(dt) if (Game.Key.isDown(Game.Key.RIGHT))
 
   moveUp: (dt) ->
-    @sprite.position.y -= @speed  * dt
+    @positionDesired.y -= @speed  * dt
 
   moveDown: (dt) ->
-    @sprite.position.y += @speed  * dt
+    @positionDesired.y += @speed  * dt
 
   moveRight: (dt) ->
-    @sprite.position.x += @speed  * dt
+    @positionDesired.x += @speed  * dt
 
   moveLeft: (dt) ->
-    @sprite.position.x -= @speed  * dt
+    @positionDesired.x -= @speed  * dt
+
+  updateCouldMove: (couldMove) ->
+    if couldMove
+      @sprite.position.x = @positionDesired.x
+      @sprite.position.y = @positionDesired.y
+    else
+      @positionDesired.x = @sprite.position.x
+      @positionDesired.y = @sprite.position.y
+
