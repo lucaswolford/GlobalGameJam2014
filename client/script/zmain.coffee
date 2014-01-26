@@ -37,14 +37,18 @@ onAssetsLoaded = () ->
 #interro
   interroBg = new PIXI.Sprite(Game.getTextureFromFrame("interrogation"))
   detective = new Game.SpriteAnimation(Game.getTexturesFromFrameBase("Detective Pose "), 3)
+  prot = new PIXI.Sprite(Game.getTextureFromFrame("protg neutral"))
   updater.detective = detective
+  updater.prot = prot
   containerInterro.addChild(interroBg)
   containerInterro.addChild(detective)
+  containerInterro.addChild(prot)
   updater.moodQuestion = new Game.Question(containerUI, 'mood')
 
 #interro2
   containerInterro2.addChild(interroBg)
   containerInterro2.addChild(detective)
+  containerInterro2.addChild(prot)
 
 #topdown
   updater.city = new Game.City(containerWorld)
