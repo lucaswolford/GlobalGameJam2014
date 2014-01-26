@@ -37,51 +37,104 @@ Game.dialogue =
 
     sadStab:
       [
-        {speaking:"Detective", text: "sadStab" }
+        {speaking:"You", text: "Even though everyone walked away from the fight, I can't help but feel sad about my choice in ending it. There must have been a better way, one that didn't involve anyone getting hurt..." }
+        {speaking:"Detective", text: "You want some advice? Try not to dwell on the 'what ifs' of the past."}
+        {speaking:"Detective", text: "You've made your decision, now you have to own that decision instead of wondering what else you could have done."}
+        {speaking:"Detective", text: "Nobody can change the past, just shape their own future."}
+        {speaking:"Detective", text: "Thank you for your help in the investigation."}
       ]
     sadBribe:
       [
-        {speaking:"Detective", text: "sadBribe" }
+        {speaking:"You", text: "I feel guilty having to resort to using money as a means to stop the fight. What if the person I gave it to ran away, and the purse's owner lost something special because of that?" }
+        {speaking:"Detective", text: "You want some advice? Try not to dwell on the 'what ifs' of the past."}
+        {speaking:"Detective", text: "You've made your decision, now you have to own that decision instead of wondering what else you could have done."}
+        {speaking:"Detective", text: "Nobody can change the past, just shape their own future."}
+        {speaking:"Detective", text: "Thank you for your help in the investigation."}
       ]
     sadReason:
       [
-        {speaking:"Detective", text: "sadReason" }
+        {speaking:"You", text: "I feel sad that a fight even broke out while I was out. Nobody was hurt, but I wonder if I could have stopped the fight from even happening? I saw both women while I was taking a walk, why didn't I say anything to them?" }
+        {speaking:"Detective", text: "You want some advice? Try not to dwell on the 'what ifs' of the past."}
+        {speaking:"Detective", text: "You've made your decision, now you have to own that decision instead of wondering what else you could have done."}
+        {speaking:"Detective", text: "Nobody can change the past, just shape their own future."}
+        {speaking:"Detective", text: "Thank you for your help in the investigation."}
       ]
     sadWalk:
       [
-        {speaking:"Detective", text: "sadWalk" }
+        {speaking:"You", text: "I was too afraid to do anything...so I chose to walk away. I know there was something I could have done to help, but I couldn't bring myself to try..." }
+        {speaking:"Detective", text: "You want some advice? Try not to dwell on the 'what ifs' of the past."}
+        {speaking:"Detective", text: "You've made your decision, now you have to own that decision instead of wondering what else you could have done."}
+        {speaking:"Detective", text: "Nobody can change the past, just shape their own future."}
+        {speaking:"Detective", text: "Thank you for your help in the investigation."}
       ]
     happyStab:
       [
-        {speaking:"Detective", text: "happyStab" }
+        {speaking:"You", text: "Even though someone was hurt, I feel good that I ended the fight before something worse could happen. There might have been a better way, but I'm not going to dwell on 'ifs' and 'maybes." }
+        {speaking:"Detective", text: "Well, at least someone walked away from this experience with a positive attitude."}
+        {speaking:"Detective", text: "Taking the positives of a situation like this isn't easy for most,"}
+        {speaking:"Detective", text: "but in my opinion it's important for people to act with confidence and"}
+        {speaking:"Detective", text: "own their successes...and their failures. ... "}
+        {speaking:"Detective", text: "Oh sorry for going off on a tangent."}
+        {speaking:"Detective", text: "Thank you for your help with the investigation."}
       ]
     happyBribe:
       [
-        {speaking:"Detective", text: "happyBribe" }
+        {speaking:"You", text: "I'm relieved the fight ended before it could get any worse and that the purse I used to end it can be taken back to its rightful owner. They will be so happy to get it back." }
+        {speaking:"Detective", text: "Well, at least someone walked away from this experience with a positive attitude."}
+        {speaking:"Detective", text: "Taking the positives of a situation like this isn't easy for most,"}
+        {speaking:"Detective", text: "but in my opinion it's important for people to act with confidence and"}
+        {speaking:"Detective", text: "own their successes...and their failures. ... "}
+        {speaking:"Detective", text: "Oh sorry for going off on a tangent."}
+        {speaking:"Detective", text: "Thank you for your help with the investigation."}
       ]
     happyReason:
       [
-        {speaking:"Detective", text: "happyReason" }
+        {speaking:"You", text: "I'm glad I was able to put an end to the fight. Everyone walks away from this without anyone getting hurt. I don't think I could be happier about my decision." }
+        {speaking:"Detective", text: "Well, at least someone walked away from this experience with a positive attitude."}
+        {speaking:"Detective", text: "Taking the positives of a situation like this isn't easy for most,"}
+        {speaking:"Detective", text: "but in my opinion it's important for people to act with confidence and"}
+        {speaking:"Detective", text: "own their successes...and their failures. ... "}
+        {speaking:"Detective", text: "Oh sorry for going off on a tangent."}
+        {speaking:"Detective", text: "Thank you for your help with the investigation."}
       ]
     happyWalk:
       [
-        {speaking:"Detective", text: "happyWalk" }
+        {speaking:"You", text: "I'm glad I didn't intervene. I don't know what was going on and could have just made things worse than they already were. Nobody was hurt, and that's all that matters." }
+        {speaking:"Detective", text: "Well, at least someone walked away from this experience with a positive attitude."}
+        {speaking:"Detective", text: "Taking the positives of a situation like this isn't easy for most,"}
+        {speaking:"Detective", text: "but in my opinion it's important for people to act with confidence and"}
+        {speaking:"Detective", text: "own their successes...and their failures. ... "}
+        {speaking:"Detective", text: "Oh sorry for going off on a tangent."}
+        {speaking:"Detective", text: "Thank you for your help with the investigation."}
       ]
     angryStab:
       [
-        {speaking:"Detective", text: "angryStab" }
+        {speaking:"You", text: "That bitch got what she deserved! Attacking someone else in that alley, what a creep. I don't care who she was, she crossed the line." }
+        {speaking:"Detective", text: "Alright, alright now, simmer down."}
+        {speaking:"Detective", text: "Other people rarely see the world the same way as you do, just as you don't see the same way they do."}
+        {speaking:"Detective", text: "There's no reason to get riled up over something that started out of your control."}
+        {speaking:"Detective", text: "Thank you for your help with the investigation."}
       ]
     angryBribe:
       [
-        {speaking:"Detective", text: "angryBribe" }
+        {speaking:"You", text: "The nerve of that girl demanding money from me! The damn purse wasn't even mine, but she couldn't be bothered with the details. It was all about her 'needs' to end a conflict she started." }
+        {speaking:"Detective", text: "Alright, alright now, simmer down."}
+        {speaking:"Detective", text: "Other people rarely see the world the same way as you do, just as you don't see the same way they do."}
+        {speaking:"Detective", text: "There's no reason to get riled up over something that started out of your control."}
       ]
     angryReason:
       [
-        {speaking:"Detective", text: "angryReason" }
+        {speaking:"You", text: "*Grrrrrrrgh* What a petty fight. If I could talk them down so easily, why even fight in the first place? People around me are so petty and stupid." }
+        {speaking:"Detective", text: "Alright, alright now, simmer down."}
+        {speaking:"Detective", text: "Other people rarely see the world the same way as you do, just as you don't see the same way they do."}
+        {speaking:"Detective", text: "There's no reason to get riled up over something that started out of your control."}
       ]
     angryWalk:
       [
-        {speaking:"Detective", text: "angryWalk" }
+        {speaking:"You", text: "I feel so dumb! How could I just walk away from that, without even raising a hand to try to stop it? I should have stopped that fight..." }
+        {speaking:"Detective", text: "Alright, alright now, simmer down."}
+        {speaking:"Detective", text: "Other people rarely see the world the same way as you do, just as you don't see the same way they do."}
+        {speaking:"Detective", text: "There's no reason to get riled up over something that started out of your control."}
       ]
 
   showdown:
@@ -163,8 +216,8 @@ Game.answers =
       "I ..."
     answers:
       [
-        {value:"reason", displayText:"tried to reason with them"}
-        {value:"walk",   displayText:"walked away"}
-        #{value:"stab",   displayText:"stabbed the bitch"}
+        {value:"reason", displayText:"tried to reason with them."}
+        {value:"walk",   displayText:"walked away."}
+        #{value:"stab",   displayText:"used the knife"}
         #{value:"bribe",  displayText:"give them $$$"}
       ]

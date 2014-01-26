@@ -191,9 +191,9 @@ class Game.UpdateManager
     @dialog.playScript('showdown', 'ending')
     @actionQuestion.active = true
     if @player.hasKnife == true
-      @actionQuestion.answers.push {value:"stab",   displayText:"stabbed the bitch"}
+      @actionQuestion.answers.push {value:"stab",   displayText:"used the knife."}
     if @player.hasPurse == true
-      @actionQuestion.answers.push {value:"bribe",  displayText:"give them $$$"}
+      @actionQuestion.answers.push {value:"bribe",  displayText:"gave them the purse."}
   showdowndRemoveAssetst: ->
     @stage.removeChild(@containerShowdown)
     @stage.removeChild(@containerUI)
