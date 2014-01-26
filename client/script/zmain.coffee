@@ -36,7 +36,7 @@ onAssetsLoaded = () ->
   containerTitle.addChild(title)
 #interro
   interroBg = new PIXI.Sprite(Game.getTextureFromFrame("interrogation"))
-  detective = new Game.SpriteAnimation(Game.getTexturesFromFrameBase("Detective Pose "), 3)
+  detective = new Game.SpriteAnimation(Game.getTexturesFromFrameBase("Detective Pose "), 5)
   prot = new PIXI.Sprite(Game.getTextureFromFrame("protg neutral"))
   updater.detective = detective
   updater.prot = prot
