@@ -3,6 +3,7 @@ class Game.UpdateManager
   containerUI: null
   containerTitle: null
   containerInterro: null
+  containerInterro2: null
   containerShowdown: null
   containerEnd: null
 
@@ -22,16 +23,18 @@ class Game.UpdateManager
 
   TITLE: 1
   INTERROGATION: 2
-  TOPDOWN: 3
-  SHOWDOWN: 4
-  WRAPUP: 5
-  END: 6
+  INTERROGATION2: 3
+  TOPDOWN: 4
+  SHOWDOWN: 5
+  WRAPUP: 6
+  END: 7
 
   constructor: (stage,
                 containerWorld,
                 containerUI
                 containerTitle,
                 containerInterro,
+                containerInterro2,
                 containerShowdown,
                 containerEnd
                 )->
@@ -41,6 +44,7 @@ class Game.UpdateManager
     @containerUI = containerUI
     @containerTitle = containerTitle
     @containerInterro = containerInterro
+    @containerInterro2 = containerInterro2
     @containerShowdown = containerShowdown
     @containerEnd = containerEnd
     @state = @TITLE
@@ -60,8 +64,11 @@ class Game.UpdateManager
       when @INTERROGATION
         @titleRemoveAssets()
         @interrogationAddAssets()
-      when @TOPDOWN
+      when @INTERROGATION2
         @interrogationRemoveAssets()
+        @interrogation2AddAssets()
+      when @TOPDOWN
+        @interrogation2RemoveAssets()
         @topDownAddAssets()
       when @SHOWDOWN
         @topDownRemoveAssets()
@@ -78,6 +85,7 @@ class Game.UpdateManager
     switch @state
       when @TITLE then @updateTitle(dt)
       when @INTERROGATION then @updateInterrogation(dt)
+      when @INTERROGATION2 then @updateInterrogation2(dt)
       when @TOPDOWN then @updateTopDown(dt)
       when @SHOWDOWN then @updateShowdown(dt)
       when @WRAPUP then @updateWrapUp(dt)
@@ -107,6 +115,11 @@ class Game.UpdateManager
     else
       @moodQuestion.update(dt)
 
+  updateInterrogation2: (dt) ->
+    if @dialog.active
+      @dialog.update(dt)
+    if (Game.Key.isDown(Game.Key.SPACE) && @dialog.active == false)
+      @nextState()
 
   updateTopDown: (dt) ->
     if @dialog.active
@@ -176,8 +189,15 @@ class Game.UpdateManager
     @dialog.playScript('detective', 'initial')
     @moodQuestion.active = true
   interrogationRemoveAssets: ->
-    @dialog.playScript('detective', @moodQuestion.answer)
     @stage.removeChild(@containerInterro)
+    @stage.removeChild(@containerUI)
+
+  interrogation2AddAssets: ->
+    @stage.addChild(@containerInterro2)
+    @stage.addChild(@containerUI)
+    @dialog.playScript('detective', @moodQuestion.answer)
+  interrogation2RemoveAssets: ->
+    @stage.removeChild(@containerInterro2)
     @stage.removeChild(@containerUI)
 
   topDownAddAssets: ->

@@ -4,6 +4,7 @@ containerUI = new PIXI.DisplayObjectContainer()
 containerWorld = new PIXI.DisplayObjectContainer()
 containerTitle = new PIXI.DisplayObjectContainer()
 containerInterro = new PIXI.DisplayObjectContainer()
+containerInterro2 = new PIXI.DisplayObjectContainer()
 containerShowdown = new PIXI.DisplayObjectContainer()
 containerEnd = new PIXI.DisplayObjectContainer()
 
@@ -22,6 +23,7 @@ updater = new Game.UpdateManager(stage,
                                  containerUI,
                                  containerTitle,
                                  containerInterro,
+                                 containerInterro2,
                                  containerShowdown,
                                  containerEnd )
 
@@ -36,6 +38,9 @@ onAssetsLoaded = () ->
   interroBg = new PIXI.Sprite(Game.getTextureFromFrame("interrogation"))
   containerInterro.addChild(interroBg)
   updater.moodQuestion = new Game.Question(containerUI, 'mood')
+
+#interro2
+  containerInterro2.addChild(interroBg)
 
 #topdown
   updater.city = new Game.City(containerWorld)
