@@ -35,6 +35,8 @@ onAssetsLoaded = () ->
 #interro
   interroBg = new PIXI.Sprite(Game.getTextureFromFrame("interrogation"))
   containerInterro.addChild(interroBg)
+  updater.moodQuestion = new Game.Question(containerUI, 'mood')
+
 #topdown
   updater.city = new Game.City(containerWorld)
   updater.items.push new Game.Item(270,460, containerWorld)

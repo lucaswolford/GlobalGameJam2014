@@ -6,7 +6,7 @@ class Game.DialogueBox
   active: true
 
   constructor: (stage) ->
-    @text = new PIXI.Text("Text", {font: "bold italic 36px Arvo", fill: "#110011", align: "left", stroke: "#221100", strokeThickness: 1})
+    @text = new PIXI.Text("", {font: "bold italic 36px Arvo", fill: "#110011", align: "left", stroke: "#221100", strokeThickness: 1})
     @text.position.x = 30
     @text.position.y = 10
     @text.anchor.x = @text.anchor.y = 0

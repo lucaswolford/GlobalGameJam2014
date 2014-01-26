@@ -5,6 +5,7 @@ class Game.UpdateManager
   containerInterro: null
   containerShowdown: null
   containerEnd: null
+
   dialog: null
   player: null
   city: null
@@ -12,6 +13,9 @@ class Game.UpdateManager
   npcs: []
   time: null
   worldCollisionRects: null
+
+  moodQuestion: null
+  actionQuestion: null
 
   state: null
 
@@ -92,8 +96,15 @@ class Game.UpdateManager
     @nextState() if (Game.Key.isDown(Game.Key.SPACE))
 
   updateInterrogation: (dt) ->
-    @dialog.update(dt)
-    @nextState() if (Game.Key.isDown(Game.Key.SPACE)) && @dialog.active == false
+    if (Game.Key.isDown(Game.Key.SPACE)) &&
+        @dialog.active == false &&
+        @moodQuestion.active == false
+      @nextState()
+
+    if @dialog.active
+      @dialog.update(dt)
+    else
+      @moodQuestion.update(dt)
 
   updateTopDown: (dt) ->
     @nextState() if (Game.Key.isDown(Game.Key.CTRL))

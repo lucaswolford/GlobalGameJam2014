@@ -10,12 +10,19 @@ Game.dialogue =
         "final dialogue line 1"
         "final dialogue line 2"
       ]
+
   showdown:
-    script:
+    ending1:
       [
-        "Showdown line 1"
-        "Showdown line 2"
-        "Showdown line 3"
+        "ending 1 line 1"
+        "ending 1 line 2"
+        "ending 1 line 3"
+      ]
+    ending2:
+      [
+        "ending 2 line 1"
+        "ending 2 line 2"
+        "ending 2 line 3"
       ]
 
   hobo:
@@ -83,3 +90,17 @@ Game.dialogue =
         "bystander responsible"
         "second line"
       ]
+
+Game.answers =
+  mood:
+    [
+      "happy"
+      "sad"
+      "angry"
+    ]
+  action:
+    [
+      "stab a bitch"
+      "give $$$"
+      "can't we all just get along?"
+    ]
