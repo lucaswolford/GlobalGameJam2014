@@ -5,7 +5,7 @@ class Game.Question
   answer: null
 
   constructor: (stage, question) ->
-    @text = new PIXI.Text("", {font: "bold italic 36px Arvo", fill: "#11FF11", align: "left", stroke: "#22FF00", strokeThickness: 1})
+    @text = new PIXI.Text("", {font: "bold italic 36px Arvo", fill: "#EEEEEE", align: "left", stroke: "#333333", strokeThickness: 5})
     @text.position.x = 40
     @text.position.y = 10
     @text.anchor.x = @text.anchor.y = 0

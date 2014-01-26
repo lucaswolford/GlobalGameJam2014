@@ -100,10 +100,30 @@
         "h": 600
       }
     },
-    "item.png": {
+    "dialogueBox.png": {
       "frame": {
         "x": 1400,
         "y": 1200,
+        "w": 760,
+        "h": 200
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 760,
+        "h": 200
+      },
+      "sourceSize": {
+        "w": 760,
+        "h": 200
+      }
+    },
+    "item.png": {
+      "frame": {
+        "x": 800,
+        "y": 800,
         "w": 64,
         "h": 64
       },
@@ -122,7 +142,7 @@
     },
     "bunny.png": {
       "frame": {
-        "x": 1464,
+        "x": 2160,
         "y": 1200,
         "w": 26,
         "h": 37
