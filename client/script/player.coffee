@@ -13,10 +13,10 @@ class Game.Player
     @positionDesired = @sprite.position.clone()
 
   update: (dt) ->
-    @moveUp(dt) if (Game.Key.isDown(Game.Key.UP))
-    @moveLeft(dt) if (Game.Key.isDown(Game.Key.LEFT))
-    @moveDown(dt) if (Game.Key.isDown(Game.Key.DOWN))
-    @moveRight(dt) if (Game.Key.isDown(Game.Key.RIGHT))
+    @moveUp(dt) if (Game.Key.isDown(Game.Key.UP)) || (Game.Key.isDown(Game.Key.W))
+    @moveLeft(dt) if (Game.Key.isDown(Game.Key.LEFT)) || (Game.Key.isDown(Game.Key.A))
+    @moveDown(dt) if (Game.Key.isDown(Game.Key.DOWN)) || (Game.Key.isDown(Game.Key.S))
+    @moveRight(dt) if (Game.Key.isDown(Game.Key.RIGHT)) || (Game.Key.isDown(Game.Key.D))
 
   moveUp: (dt) ->
     @positionDesired.y -= @speed  * dt
