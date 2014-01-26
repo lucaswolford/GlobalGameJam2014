@@ -31,6 +31,43 @@
 }).call(this);
 
 (function() {
+  Game.Arrow = (function() {
+    Arrow.prototype.size = 32;
+
+    Arrow.prototype.name = null;
+
+    function Arrow(x, y, stage) {
+      this.sprite = new PIXI.Sprite(Game.getTextureFromFrame("Arrow"));
+      this.sprite.anchor.x = 0.5;
+      this.sprite.anchor.y = 0.5;
+      this.sprite.position.x = x;
+      this.sprite.position.y = y;
+      this.sprite.alpha = 0;
+      stage.addChild(this.sprite);
+    }
+
+    Arrow.prototype.appearIn = function(time) {
+      var _this = this;
+      return _.delay((function() {
+        return _this.appear();
+      }), time);
+    };
+
+    Arrow.prototype.appear = function() {
+      return this.sprite.alpha = 1;
+    };
+
+    Arrow.prototype.update = function() {
+      return null;
+    };
+
+    return Arrow;
+
+  })();
+
+}).call(this);
+
+(function() {
   Game.City = (function() {
     City.prototype.width = 0;
 
@@ -45,6 +82,17 @@
 
     City.prototype.update = function() {
       return null;
+    };
+
+    City.prototype.switchBg = function(mood) {
+      switch (mood) {
+        case 'happy':
+          return this.sprite.setTexture(Game.getTextureFromFrame("worldbg"));
+        case 'angry':
+          return this.sprite.setTexture(Game.getTextureFromFrame("worldbg_angry"));
+        case 'sad':
+          return this.sprite.setTexture(Game.getTextureFromFrame("worldbg_sad"));
+      }
     };
 
     return City;
@@ -99,7 +147,7 @@
 
     DialogueBox.prototype.index = 0;
 
-    DialogueBox.prototype.textSpeed = 10;
+    DialogueBox.prototype.textSpeed = 50;
 
     DialogueBox.prototype.active = true;
 
@@ -201,13 +249,16 @@
   Game.Item = (function() {
     Item.prototype.size = 32;
 
-    function Item(x, y, stage) {
-      this.sprite = new PIXI.Sprite(Game.getTextureFromFrame("item"));
+    Item.prototype.name = null;
+
+    function Item(x, y, stage, name) {
+      this.sprite = new PIXI.Sprite(Game.getTextureFromFrame("Item_" + name));
       this.sprite.anchor.x = 0.5;
       this.sprite.anchor.y = 0.5;
       this.sprite.position.x = x;
       this.sprite.position.y = y;
       stage.addChild(this.sprite);
+      this.name = name;
     }
 
     Item.prototype.update = function() {
@@ -273,6 +324,8 @@
 
     Question.prototype.answer = null;
 
+    Question.prototype.answers = null;
+
     function Question(stage, question) {
       var _this = this;
       this.text = new PIXI.Text("", {
@@ -290,6 +343,7 @@
       window.addEventListener('keydown', (function(event) {
         return _this.keydown(event);
       }), false);
+      this.answers = Game.answers[this.question]['answers'];
     }
 
     Question.prototype.keydown = function(event) {
@@ -350,7 +404,7 @@
     };
 
     Question.prototype.getAnswers = function() {
-      return Game.answers[this.question]['answers'];
+      return this.answers;
     };
 
     return Question;
@@ -388,9 +442,13 @@
       this.timeUntilNextFrame -= dt;
       if (this.timeUntilNextFrame <= 0) {
         this.timeUntilNextFrame += this.timePerFrame;
-        this.frameCur = (this.frameCur + 1) % this.textures.length;
-        return this.setTexture(this.textures[this.frameCur]);
+        return this.setFrame((this.frameCur + 1) % this.textures.length);
       }
+    };
+
+    SpriteAnimation.prototype.setFrame = function(index) {
+      this.frameCur = index;
+      return this.setTexture(this.textures[this.frameCur]);
     };
 
     return SpriteAnimation;
@@ -409,6 +467,8 @@
 
     UpdateManager.prototype.containerInterro = null;
 
+    UpdateManager.prototype.containerInterro2 = null;
+
     UpdateManager.prototype.containerShowdown = null;
 
     UpdateManager.prototype.containerEnd = null;
@@ -417,11 +477,15 @@
 
     UpdateManager.prototype.player = null;
 
+    UpdateManager.prototype.detective = null;
+
     UpdateManager.prototype.city = null;
 
     UpdateManager.prototype.items = [];
 
     UpdateManager.prototype.npcs = [];
+
+    UpdateManager.prototype.arrow = null;
 
     UpdateManager.prototype.time = null;
 
@@ -437,21 +501,24 @@
 
     UpdateManager.prototype.INTERROGATION = 2;
 
-    UpdateManager.prototype.TOPDOWN = 3;
+    UpdateManager.prototype.INTERROGATION2 = 3;
 
-    UpdateManager.prototype.SHOWDOWN = 4;
+    UpdateManager.prototype.TOPDOWN = 4;
 
-    UpdateManager.prototype.WRAPUP = 5;
+    UpdateManager.prototype.SHOWDOWN = 5;
 
-    UpdateManager.prototype.END = 6;
+    UpdateManager.prototype.WRAPUP = 6;
 
-    function UpdateManager(stage, containerWorld, containerUI, containerTitle, containerInterro, containerShowdown, containerEnd) {
+    UpdateManager.prototype.END = 7;
+
+    function UpdateManager(stage, containerWorld, containerUI, containerTitle, containerInterro, containerInterro2, containerShowdown, containerEnd) {
       this.worldCollisionRects = new Game.WorldCollisionRects();
       this.stage = stage;
       this.containerWorld = containerWorld;
       this.containerUI = containerUI;
       this.containerTitle = containerTitle;
       this.containerInterro = containerInterro;
+      this.containerInterro2 = containerInterro2;
       this.containerShowdown = containerShowdown;
       this.containerEnd = containerEnd;
       this.state = this.TITLE;
@@ -474,8 +541,11 @@
         case this.INTERROGATION:
           this.titleRemoveAssets();
           return this.interrogationAddAssets();
-        case this.TOPDOWN:
+        case this.INTERROGATION2:
           this.interrogationRemoveAssets();
+          return this.interrogation2AddAssets();
+        case this.TOPDOWN:
+          this.interrogation2RemoveAssets();
           return this.topDownAddAssets();
         case this.SHOWDOWN:
           this.topDownRemoveAssets();
@@ -497,6 +567,8 @@
           return this.updateTitle(dt);
         case this.INTERROGATION:
           return this.updateInterrogation(dt);
+        case this.INTERROGATION2:
+          return this.updateInterrogation2(dt);
         case this.TOPDOWN:
           return this.updateTopDown(dt);
         case this.SHOWDOWN:
@@ -531,6 +603,7 @@
       if ((Game.Key.isDown(Game.Key.ENTER)) && this.dialog.active === false && this.moodQuestion.active === false) {
         this.nextState();
       }
+      this.detective.update(dt);
       if (this.dialog.active) {
         return this.dialog.update(dt);
       } else {
@@ -538,11 +611,18 @@
       }
     };
 
+    UpdateManager.prototype.updateInterrogation2 = function(dt) {
+      if (this.dialog.active) {
+        this.detective.update(dt);
+        this.dialog.update(dt);
+      }
+      if (Game.Key.isDown(Game.Key.SPACE) && this.dialog.active === false) {
+        return this.nextState();
+      }
+    };
+
     UpdateManager.prototype.updateTopDown = function(dt) {
       var item, npc, playerIsColliding, _i, _j, _len, _len1, _ref, _ref1;
-      if (Game.Key.isDown(Game.Key.CTRL)) {
-        this.nextState();
-      }
       if (this.dialog.active) {
         this.dialog.update(dt);
       } else {
@@ -555,6 +635,12 @@
           item.update(dt);
           if (this.ifPlayerCollision(item) && (Game.Key.isDown(Game.Key.SPACE))) {
             item.playerActivated();
+            if (item.name === 'knife') {
+              this.player.hasKnife = true;
+            }
+            if (item.name === 'purse') {
+              this.player.hasPurse = true;
+            }
           }
         }
         _ref1 = this.npcs;
@@ -563,6 +649,11 @@
           npc.update(dt);
           if (this.ifPlayerCollision(npc) && (Game.Key.isDown(Game.Key.SPACE)) && npc.active === false) {
             npc.playerActivated(this.dialog, this.moodQuestion.answer);
+          }
+        }
+        if (this.worldCollisionRects.isOverDoor(this.player.positionDesired.x, this.player.positionDesired.y)) {
+          if (Game.Key.isDown(Game.Key.SPACE) && this.arrow.sprite.alpha === 1) {
+            this.nextState();
           }
         }
         if (this.worldCollisionRects.isPlayerColliding(this.player)) {
@@ -596,9 +687,7 @@
     };
 
     UpdateManager.prototype.updateEnd = function(dt) {
-      if (Game.Key.isDown(Game.Key.SPACE)) {
-        return this.nextState();
-      }
+      return this.dialog.update(dt);
     };
 
     UpdateManager.prototype.titleAddAssets = function() {
@@ -610,21 +699,34 @@
     };
 
     UpdateManager.prototype.interrogationAddAssets = function() {
-      this.stage.addChild(this.containerInterro);
+      this.stage.addChild(this.containerInterro2);
       this.stage.addChild(this.containerUI);
       this.dialog.playScript('detective', 'initial');
       return this.moodQuestion.active = true;
     };
 
     UpdateManager.prototype.interrogationRemoveAssets = function() {
-      this.dialog.playScript('detective', this.moodQuestion.answer);
-      this.stage.removeChild(this.containerInterro);
+      this.stage.removeChild(this.containerInterro2);
+      return this.stage.removeChild(this.containerUI);
+    };
+
+    UpdateManager.prototype.interrogation2AddAssets = function() {
+      this.prot.setTexture(Game.getTextureFromFrame("protg " + this.moodQuestion.answer));
+      this.stage.addChild(this.containerInterro2);
+      this.stage.addChild(this.containerUI);
+      return this.dialog.playScript('detective', this.moodQuestion.answer);
+    };
+
+    UpdateManager.prototype.interrogation2RemoveAssets = function() {
+      this.stage.removeChild(this.containerInterro2);
       return this.stage.removeChild(this.containerUI);
     };
 
     UpdateManager.prototype.topDownAddAssets = function() {
+      this.city.switchBg(this.moodQuestion.answer);
       this.stage.addChild(this.containerWorld);
-      return this.stage.addChild(this.containerUI);
+      this.stage.addChild(this.containerUI);
+      return this.arrow.appearIn(15000);
     };
 
     UpdateManager.prototype.topDownRemoveAssets = function() {
@@ -635,8 +737,20 @@
     UpdateManager.prototype.showdowndAddAssetst = function() {
       this.stage.addChild(this.containerShowdown);
       this.stage.addChild(this.containerUI);
-      this.dialog.playScript('showdown', 'ending1');
-      return this.actionQuestion.active = true;
+      this.dialog.playScript('showdown', 'ending');
+      this.actionQuestion.active = true;
+      if (this.player.hasKnife === true) {
+        this.actionQuestion.answers.push({
+          value: "stab",
+          displayText: "used the knife."
+        });
+      }
+      if (this.player.hasPurse === true) {
+        return this.actionQuestion.answers.push({
+          value: "bribe",
+          displayText: "gave them the purse."
+        });
+      }
     };
 
     UpdateManager.prototype.showdowndRemoveAssetst = function() {
@@ -645,9 +759,48 @@
     };
 
     UpdateManager.prototype.wrapUpAddAssets = function() {
+      var action, mood;
       this.stage.addChild(this.containerInterro);
       this.stage.addChild(this.containerUI);
-      return this.dialog.playScript('detective', 'final1');
+      mood = this.moodQuestion.answer;
+      action = this.actionQuestion.answer;
+      switch (mood) {
+        case 'sad':
+          switch (action) {
+            case 'stab':
+              return this.dialog.playScript('detective', 'sadStab');
+            case 'bribe':
+              return this.dialog.playScript('detective', 'sadBribe');
+            case 'reason':
+              return this.dialog.playScript('detective', 'sadReason');
+            case 'walk':
+              return this.dialog.playScript('detective', 'sadWalk');
+          }
+          break;
+        case 'happy':
+          switch (action) {
+            case 'stab':
+              return this.dialog.playScript('detective', 'happyStab');
+            case 'bribe':
+              return this.dialog.playScript('detective', 'happyBribe');
+            case 'reason':
+              return this.dialog.playScript('detective', 'happyReason');
+            case 'walk':
+              return this.dialog.playScript('detective', 'happyWalk');
+          }
+          break;
+        case 'angry':
+          switch (action) {
+            case 'stab':
+              return this.dialog.playScript('detective', 'angryStab');
+            case 'bribe':
+              return this.dialog.playScript('detective', 'angryBribe');
+            case 'reason':
+              return this.dialog.playScript('detective', 'angryReason');
+            case 'walk':
+              return this.dialog.playScript('detective', 'angryWalk');
+          }
+      }
     };
 
     UpdateManager.prototype.wrapUpRemoveAssets = function() {
@@ -656,11 +809,12 @@
     };
 
     UpdateManager.prototype.endAddAssets = function() {
-      return this.stage.addChild(this.containerEnd);
+      this.stage.addChild(this.containerUI);
+      return this.dialog.playScript('the', 'end');
     };
 
     UpdateManager.prototype.endRemoveAssets = function() {
-      return this.stage.removeChild(this.containerEnd);
+      return this.stage.removeChild(this.containerUI);
     };
 
     return UpdateManager;
@@ -732,6 +886,13 @@
       }
     ];
 
+    WorldCollisionRects.prototype.door = {
+      x1: 428,
+      x2: 505,
+      y1: 409,
+      y2: 473
+    };
+
     WorldCollisionRects.prototype.isPlayerColliding = function(player) {
       return _.any([this.isPointColliding(player.positionDesired.x - player.size, player.positionDesired.y - player.size), this.isPointColliding(player.positionDesired.x - player.size, player.positionDesired.y + player.size), this.isPointColliding(player.positionDesired.x + player.size, player.positionDesired.y + player.size), this.isPointColliding(player.positionDesired.x + player.size, player.positionDesired.y - player.size)]);
     };
@@ -740,6 +901,10 @@
       return _.any(this.rects, (function(rect) {
         return x > rect.x1 && x < rect.x2 && y > rect.y1 && y < rect.y2;
       }));
+    };
+
+    WorldCollisionRects.prototype.isOverDoor = function(x, y) {
+      return x > this.door.x1 && x < this.door.x2 && y > this.door.y1 && y < this.door.y2;
     };
 
     return WorldCollisionRects;
@@ -757,25 +922,16 @@
           text: "Man what a mess"
         }, {
           speaking: "Detective",
-          text: "3 people, 3 stories"
+          text: "Three people, and three different stories"
         }, {
           speaking: "Detective",
-          text: "Each of them brings up"
-        }, {
-          speaking: "Detective",
-          text: "inconsistencies with another."
+          text: "Each of them brings up inconsistencies with another."
         }, {
           speaking: "Detective",
           text: "Maybe your story will clear up the confusion."
         }, {
           speaking: "Detective",
-          text: "(or at least clear up some the inconsistencies between the other stories)"
-        }, {
-          speaking: "Detective",
-          text: "But before we begin,"
-        }, {
-          speaking: "Detective",
-          text: "I would like to ask you a question:"
+          text: "But before we begin, I would like to ask you a question:"
         }, {
           speaking: "Detective",
           text: "How do you feel?"
@@ -784,64 +940,43 @@
       sad: [
         {
           speaking: "Detective",
-          text: "Sad?"
-        }, {
-          speaking: "Detective",
-          text: "Why do you feel that way?"
+          text: "Sad? Why do you feel that way?"
         }, {
           speaking: "You",
           text: "... *sigh*"
         }, {
           speaking: "Detective",
-          text: "All right then."
-        }, {
-          speaking: "Detective",
-          text: "Let's start at the beginning."
+          text: "All right then. Let's start at the beginning."
         }, {
           speaking: "Detective",
           text: "You mentioned to the police that you left your home shortly before the incident to go for a walk?"
         }, {
           speaking: "Detective",
-          text: "Is that correct?"
-        }, {
-          speaking: "Detective",
-          text: "Walk me through what happened from there. "
+          text: "Is that correct? Walk me through what happened from there. "
         }
       ],
       angry: [
         {
           speaking: "Detective",
-          text: "Angry?"
-        }, {
-          speaking: "Detective",
-          text: "Why do you feel that way?"
+          text: "Angry? Why do you feel that way?"
         }, {
           speaking: "You",
           text: "..."
         }, {
           speaking: "Detective",
-          text: "All right then."
-        }, {
-          speaking: "Detective",
-          text: "Let's start at the beginning."
+          text: "All right then. Let's start at the beginning."
         }, {
           speaking: "Detective",
           text: "You mentioned to the police that you left your home shortly before the incident to go for a walk?"
         }, {
           speaking: "Detective",
-          text: "Is that correct?"
-        }, {
-          speaking: "Detective",
-          text: "Walk me through what happened from there. "
+          text: "Is that correct? Walk me through what happened from there. "
         }
       ],
       happy: [
         {
           speaking: "Detective",
-          text: "Relieved?"
-        }, {
-          speaking: "Detective",
-          text: "Why do you feel that way?"
+          text: "Relieved? Why do you feel that way?"
         }, {
           speaking: "You",
           text: "Well this isn't exactly how I thought my day would go,"
@@ -850,63 +985,270 @@
           text: "but I feel so...good about how things turned out."
         }, {
           speaking: "Detective",
-          text: "All right then."
-        }, {
-          speaking: "Detective",
-          text: "Let's start at the beginning."
+          text: "All right then. Let's start at the beginning."
         }, {
           speaking: "Detective",
           text: "You mentioned to the police that you left your home shortly before the incident to go for a walk?"
         }, {
           speaking: "Detective",
-          text: "Is that correct?"
-        }, {
-          speaking: "Detective",
-          text: "Walk me through what happened from there."
+          text: "Is that correct? Walk me through what happened from there. "
         }
       ],
-      final1: [
+      sadStab: [
         {
-          speaking: "Detective",
-          text: "final dialogue 1 line 1"
+          speaking: "You",
+          text: "Even though everyone walked away from the fight, I can't help but feel sad about my choice in ending it. There must have been a better way, one that didn't involve anyone getting hurt..."
         }, {
           speaking: "Detective",
-          text: "final dialogue 1 line 2"
+          text: "You want some advice? Try not to dwell on the 'what ifs' of the past."
+        }, {
+          speaking: "Detective",
+          text: "You've made your decision, now you have to own that decision instead of wondering what else you could have done."
+        }, {
+          speaking: "Detective",
+          text: "Nobody can change the past, just shape their own future."
+        }, {
+          speaking: "Detective",
+          text: "Thank you for your help in the investigation."
         }
       ],
-      final2: [
+      sadBribe: [
         {
-          speaking: "Detective",
-          text: "final dialogue 2 line 1"
+          speaking: "You",
+          text: "I feel guilty having to resort to using money as a means to stop the fight. What if the person I gave it to ran away, and the purse's owner lost something special because of that?"
         }, {
           speaking: "Detective",
-          text: "final dialogue 2 line 2"
+          text: "You want some advice? Try not to dwell on the 'what ifs' of the past."
+        }, {
+          speaking: "Detective",
+          text: "You've made your decision, now you have to own that decision instead of wondering what else you could have done."
+        }, {
+          speaking: "Detective",
+          text: "Nobody can change the past, just shape their own future."
+        }, {
+          speaking: "Detective",
+          text: "Thank you for your help in the investigation."
+        }
+      ],
+      sadReason: [
+        {
+          speaking: "You",
+          text: "I feel sad that a fight even broke out while I was out. Nobody was hurt, but I wonder if I could have stopped the fight from even happening? I saw both women while I was taking a walk, why didn't I say anything to them?"
+        }, {
+          speaking: "Detective",
+          text: "You want some advice? Try not to dwell on the 'what ifs' of the past."
+        }, {
+          speaking: "Detective",
+          text: "You've made your decision, now you have to own that decision instead of wondering what else you could have done."
+        }, {
+          speaking: "Detective",
+          text: "Nobody can change the past, just shape their own future."
+        }, {
+          speaking: "Detective",
+          text: "Thank you for your help in the investigation."
+        }
+      ],
+      sadWalk: [
+        {
+          speaking: "You",
+          text: "I was too afraid to do anything...so I chose to walk away. I know there was something I could have done to help, but I couldn't bring myself to try..."
+        }, {
+          speaking: "Detective",
+          text: "You want some advice? Try not to dwell on the 'what ifs' of the past."
+        }, {
+          speaking: "Detective",
+          text: "You've made your decision, now you have to own that decision instead of wondering what else you could have done."
+        }, {
+          speaking: "Detective",
+          text: "Nobody can change the past, just shape their own future."
+        }, {
+          speaking: "Detective",
+          text: "Thank you for your help in the investigation."
+        }
+      ],
+      happyStab: [
+        {
+          speaking: "You",
+          text: "Even though someone was hurt, I feel good that I ended the fight before something worse could happen. There might have been a better way, but I'm not going to dwell on 'ifs' and 'maybes."
+        }, {
+          speaking: "Detective",
+          text: "Well, at least someone walked away from this experience with a positive attitude."
+        }, {
+          speaking: "Detective",
+          text: "Taking the positives of a situation like this isn't easy for most,"
+        }, {
+          speaking: "Detective",
+          text: "but in my opinion it's important for people to act with confidence and"
+        }, {
+          speaking: "Detective",
+          text: "own their successes...and their failures. ... "
+        }, {
+          speaking: "Detective",
+          text: "Oh sorry for going off on a tangent."
+        }, {
+          speaking: "Detective",
+          text: "Thank you for your help with the investigation."
+        }
+      ],
+      happyBribe: [
+        {
+          speaking: "You",
+          text: "I'm relieved the fight ended before it could get any worse and that the purse I used to end it can be taken back to its rightful owner. They will be so happy to get it back."
+        }, {
+          speaking: "Detective",
+          text: "Well, at least someone walked away from this experience with a positive attitude."
+        }, {
+          speaking: "Detective",
+          text: "Taking the positives of a situation like this isn't easy for most,"
+        }, {
+          speaking: "Detective",
+          text: "but in my opinion it's important for people to act with confidence and"
+        }, {
+          speaking: "Detective",
+          text: "own their successes...and their failures. ... "
+        }, {
+          speaking: "Detective",
+          text: "Oh sorry for going off on a tangent."
+        }, {
+          speaking: "Detective",
+          text: "Thank you for your help with the investigation."
+        }
+      ],
+      happyReason: [
+        {
+          speaking: "You",
+          text: "I'm glad I was able to put an end to the fight. Everyone walks away from this without anyone getting hurt. I don't think I could be happier about my decision."
+        }, {
+          speaking: "Detective",
+          text: "Well, at least someone walked away from this experience with a positive attitude."
+        }, {
+          speaking: "Detective",
+          text: "Taking the positives of a situation like this isn't easy for most,"
+        }, {
+          speaking: "Detective",
+          text: "but in my opinion it's important for people to act with confidence and"
+        }, {
+          speaking: "Detective",
+          text: "own their successes...and their failures. ... "
+        }, {
+          speaking: "Detective",
+          text: "Oh sorry for going off on a tangent."
+        }, {
+          speaking: "Detective",
+          text: "Thank you for your help with the investigation."
+        }
+      ],
+      happyWalk: [
+        {
+          speaking: "You",
+          text: "I'm glad I didn't intervene. I don't know what was going on and could have just made things worse than they already were. Nobody was hurt, and that's all that matters."
+        }, {
+          speaking: "Detective",
+          text: "Well, at least someone walked away from this experience with a positive attitude."
+        }, {
+          speaking: "Detective",
+          text: "Taking the positives of a situation like this isn't easy for most,"
+        }, {
+          speaking: "Detective",
+          text: "but in my opinion it's important for people to act with confidence and"
+        }, {
+          speaking: "Detective",
+          text: "own their successes...and their failures. ... "
+        }, {
+          speaking: "Detective",
+          text: "Oh sorry for going off on a tangent."
+        }, {
+          speaking: "Detective",
+          text: "Thank you for your help with the investigation."
+        }
+      ],
+      angryStab: [
+        {
+          speaking: "You",
+          text: "That bitch got what she deserved! Attacking someone else in that alley, what a creep. I don't care who she was, she crossed the line."
+        }, {
+          speaking: "Detective",
+          text: "Alright, alright now, simmer down."
+        }, {
+          speaking: "Detective",
+          text: "Other people rarely see the world the same way as you do, just as you don't see the same way they do."
+        }, {
+          speaking: "Detective",
+          text: "There's no reason to get riled up over something that started out of your control."
+        }, {
+          speaking: "Detective",
+          text: "Thank you for your help with the investigation."
+        }
+      ],
+      angryBribe: [
+        {
+          speaking: "You",
+          text: "The nerve of that girl demanding money from me! The damn purse wasn't even mine, but she couldn't be bothered with the details. It was all about her 'needs' to end a conflict she started."
+        }, {
+          speaking: "Detective",
+          text: "Alright, alright now, simmer down."
+        }, {
+          speaking: "Detective",
+          text: "Other people rarely see the world the same way as you do, just as you don't see the same way they do."
+        }, {
+          speaking: "Detective",
+          text: "There's no reason to get riled up over something that started out of your control."
+        }
+      ],
+      angryReason: [
+        {
+          speaking: "You",
+          text: "*Grrrrrrrgh* What a petty fight. If I could talk them down so easily, why even fight in the first place? People around me are so petty and stupid."
+        }, {
+          speaking: "Detective",
+          text: "Alright, alright now, simmer down."
+        }, {
+          speaking: "Detective",
+          text: "Other people rarely see the world the same way as you do, just as you don't see the same way they do."
+        }, {
+          speaking: "Detective",
+          text: "There's no reason to get riled up over something that started out of your control."
+        }
+      ],
+      angryWalk: [
+        {
+          speaking: "You",
+          text: "I feel so dumb! How could I just walk away from that, without even raising a hand to try to stop it? I should have stopped that fight..."
+        }, {
+          speaking: "Detective",
+          text: "Alright, alright now, simmer down."
+        }, {
+          speaking: "Detective",
+          text: "Other people rarely see the world the same way as you do, just as you don't see the same way they do."
+        }, {
+          speaking: "Detective",
+          text: "There's no reason to get riled up over something that started out of your control."
         }
       ]
     },
     showdown: {
-      ending1: [
+      ending: [
         {
-          speaking: "",
-          text: "ending 1 line 1"
+          speaking: "You",
+          text: "I was about to finish my walk and go back inside when"
         }, {
-          speaking: "",
-          text: "ending 1 line 2"
+          speaking: "You",
+          text: "I heard a scream coming from the alley."
         }, {
-          speaking: "",
-          text: "ending 1 line 3"
-        }
-      ],
-      ending2: [
-        {
-          speaking: '',
-          text: "ending 2 line 1"
+          speaking: "You",
+          text: "I ran through the alley as fast as I could to find the source of the scream."
         }, {
-          speaking: '',
-          text: "ending 2 line 2"
+          speaking: "You",
+          text: "As I rounded the corner I saw two girls arguing and fighting with each other."
         }, {
-          speaking: '',
-          text: "ending 2 line 3"
+          speaking: "You",
+          text: "I couldn't tell what it was about exactly,"
+        }, {
+          speaking: "You",
+          text: "but I remember hearing a few words like 'purse' and 'money.'"
+        }, {
+          speaking: "Detective",
+          text: "I see. So what did you do about it?"
         }
       ]
     },
@@ -996,6 +1338,14 @@
           text: "Hey man, what's wrong?"
         }
       ]
+    },
+    the: {
+      end: [
+        {
+          speaking: 'Ryan, James, Heleen, Robin, and Lucas',
+          text: '\n\nThe End. \n\n\nThank you for playing.'
+        }
+      ]
     }
   };
 
@@ -1016,17 +1366,14 @@
       ]
     },
     action: {
-      question: "What do you do?",
+      question: "I ...",
       answers: [
         {
-          value: "stab",
-          displayText: "stab a bitch"
-        }, {
-          value: "giveCash",
-          displayText: "give $$$"
-        }, {
           value: "reason",
-          displayText: "can't we all just get along?"
+          displayText: "tried to reason with them."
+        }, {
+          value: "walk",
+          displayText: "walked away."
         }
       ]
     }
@@ -1101,6 +1448,10 @@
 
     Player.prototype.isMoving = false;
 
+    Player.prototype.hasPurse = false;
+
+    Player.prototype.hasKnife = false;
+
     function Player(x, y, stage) {
       this.sprites = {
         left: this._prepDirection('playerLeft', x, y, stage),
@@ -1113,7 +1464,7 @@
     }
 
     Player.prototype._prepDirection = function(baseName, x, y, stage) {
-      this.sprite = new Game.SpriteAnimation(Game.getTexturesFromFrameBase(baseName), 0.5);
+      this.sprite = new Game.SpriteAnimation(Game.getTexturesFromFrameBase(baseName), 0.1);
       this.sprite.anchor.x = 0.5;
       this.sprite.anchor.y = 0.5;
       this.sprite.position.x = x;
@@ -1147,6 +1498,10 @@
       if (this.isMoving) {
         return _.each(_.keys(this.sprites), (function(dir) {
           return _this.sprites[dir].update(dt);
+        }));
+      } else {
+        return _.each(_.keys(this.sprites), (function(dir) {
+          return _this.sprites[dir].setFrame(0);
         }));
       }
     };
@@ -1195,7 +1550,7 @@
 }).call(this);
 
 (function() {
-  var animate, assetsLoaded, containerEnd, containerInterro, containerShowdown, containerTitle, containerUI, containerWorld, input, loader, onAssetsLoaded, renderer, stage, updater;
+  var animate, assetsLoaded, containerEnd, containerInterro, containerInterro2, containerShowdown, containerTitle, containerUI, containerWorld, input, loader, onAssetsLoaded, renderer, stage, updater;
 
   stage = new PIXI.Stage(0x000000);
 
@@ -1206,6 +1561,8 @@
   containerTitle = new PIXI.DisplayObjectContainer();
 
   containerInterro = new PIXI.DisplayObjectContainer();
+
+  containerInterro2 = new PIXI.DisplayObjectContainer();
 
   containerShowdown = new PIXI.DisplayObjectContainer();
 
@@ -1226,24 +1583,34 @@
 
   input = new Game.InputManager(stage);
 
-  updater = new Game.UpdateManager(stage, containerWorld, containerUI, containerTitle, containerInterro, containerShowdown, containerEnd);
+  updater = new Game.UpdateManager(stage, containerWorld, containerUI, containerTitle, containerInterro, containerInterro2, containerShowdown, containerEnd);
 
   assetsLoaded = false;
 
   onAssetsLoaded = function() {
-    var endBg, interroBg, showdownBg, title, wrapupBg;
+    var detective, endBg, interroBg, prot, showdownBg, title, wrapupBg;
     title = new PIXI.Sprite(Game.getTextureFromFrame("titleScreen"));
     containerTitle.addChild(title);
     interroBg = new PIXI.Sprite(Game.getTextureFromFrame("interrogation"));
+    detective = new Game.SpriteAnimation(Game.getTexturesFromFrameBase("Detective Pose "), 5);
+    prot = new PIXI.Sprite(Game.getTextureFromFrame("protg neutral"));
+    updater.detective = detective;
+    updater.prot = prot;
     containerInterro.addChild(interroBg);
+    containerInterro.addChild(detective);
+    containerInterro.addChild(prot);
     updater.moodQuestion = new Game.Question(containerUI, 'mood');
+    containerInterro2.addChild(interroBg);
+    containerInterro2.addChild(detective);
+    containerInterro2.addChild(prot);
     updater.city = new Game.City(containerWorld);
-    updater.items.push(new Game.Item(270, 460, containerWorld));
-    updater.items.push(new Game.Item(1260, 470, containerWorld));
-    updater.player = new Game.Player(463, 460, containerWorld);
+    updater.items.push(new Game.Item(270, 460, containerWorld, 'knife'));
+    updater.items.push(new Game.Item(1260, 470, containerWorld, 'purse'));
     updater.dialog = new Game.DialogueBox(containerUI);
+    updater.arrow = new Game.Arrow(463, 580, containerWorld);
     updater.npcs.push(new Game.Npc(960, 430, containerWorld, 'hobo'));
     updater.npcs.push(new Game.Npc(680, 430, containerWorld, 'bystander'));
+    updater.player = new Game.Player(463, 460, containerWorld);
     updater.npcs.push(new Game.Npc(1180, 680, containerWorld, 'victim'));
     showdownBg = new PIXI.Sprite(Game.getTextureFromFrame("showdown"));
     containerShowdown.addChild(showdownBg);
@@ -1252,7 +1619,6 @@
     containerInterro.addChild(wrapupBg);
     endBg = new PIXI.Sprite(Game.getTextureFromFrame("end"));
     containerEnd.addChild(endBg);
-    new Game.DevRectDraw(containerWorld);
     return assetsLoaded = true;
   };
 
